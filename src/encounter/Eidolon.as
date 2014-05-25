@@ -12,20 +12,21 @@
 		}
 		
 		public static function loadEidolon():void {
-			CombatAI.e1.active = true;
-			CombatAI.e1.name = "Eidolon";
-			CombatAI.e1.maxHP = CombatAI.e1.HP;
-			CombatAI.e1.maxMP = CombatAI.e1.MP;
-			CombatAI.e1.maxSP = CombatAI.e1.SP;
-			CombatAI.e1.HP = 9999;
-			CombatAI.e1.MP = 9999;
-			CombatAI.e1.SP = 9999;
-			CombatAI.e1.str = 999;
-			CombatAI.e1.endr = 999;
-			CombatAI.e1.dex = 999;
-			CombatAI.e1.agi = 999;
-			CombatAI.e1.wis = 999;
-			CombatAI.e1.behavior = "Aggressive";
+			var EidolonEntity = CombatAI.enemyTeam[0];
+			EidolonEntity.active = true;
+			EidolonEntity.name = "Eidolon";
+			EidolonEntity.maxHP = EidolonEntity.HP;
+			EidolonEntity.maxMP = EidolonEntity.MP;
+			EidolonEntity.maxSP = EidolonEntity.SP;
+			EidolonEntity.HP = 9999;
+			EidolonEntity.MP = 9999;
+			EidolonEntity.SP = 9999;
+			EidolonEntity.str = 999;
+			EidolonEntity.endr = 999;
+			EidolonEntity.dex = 999;
+			EidolonEntity.agi = 999;
+			EidolonEntity.wis = 999;
+			EidolonEntity.behavior = "Aggressive";
 		}
 		//Text for the encounter, triggered based on situation
 		public static function flavorText(id:Number):void {

@@ -47,32 +47,38 @@
 		}
 		//Load up data when an encounter is triggered.
 		public function startFight():void {
-			//Push data into the Player display
-			player.visible = true;
-			player.label.text = "" + CombatAI.pc.name + "";
-			player.HP.text = "" + CombatAI.pc.HP + "";
-			player.MP.text = "" + CombatAI.pc.MP + "";
-			player.SP.text = "" + CombatAI.pc.SP + "";
-			//Load Enemy 1 data if present... it should be for fuck's sake
-			if (CombatAI.e1.active) {
-				enemy1.visible = true;
-				enemy1.label.text = "" + CombatAI.e1.name +"";
-				enemy1.HP.text = "" + CombatAI.e1.HP + "";
-				enemy1.MP.text = "" + CombatAI.e1.MP + "";
-				enemy1.SP.text = "" + CombatAI.e1.SP + "";
+			var allEntities = [].concat(CombatAI.playerTeam, CombatAI.enemyTeam);
+			var allDisplays = [player, companion1, companion2, 
+							  enemy1, enemy2, enemy3];
+			//Push data into all displays
+			for (var i:int = 0; i < allDisplays.length; i += 1) {
+				// if an entity is active draw its data to thes screen
+				if (allEntities[i].active) {
+					allDisplays[i].visible = true;
+					allDisplays[i].label.text = "" + allEntities[i].name + "";
+				}
 			}
-			else {
-				trace("Someone dun fucked up and forgot to put data into the e1 instance of Entity");
-			}
+			// Push all the data that changs over time to the display
+			updateDisplay();
 		}
 		//Refresh displays whenever HP, MP, & SP change
 		public function refreshDisplays():void {
-			player.HP.text = "" + CombatAI.pc.HP + "";
-			player.MP.text = "" + CombatAI.pc.MP + "";
-			player.SP.text = "" + CombatAI.pc.SP + "";
-			enemy1.HP.text = "" + CombatAI.e1.HP + "";
-			enemy1.MP.text = "" + CombatAI.e1.MP + "";
-			enemy1.SP.text = "" + CombatAI.e1.SP + "";
+			updateDisplay();
+		}
+		
+		private function updateDisplay(): void {
+			var allEntities = [].concat(CombatAI.playerTeam, CombatAI.enemyTeam),
+				allDisplays = [player, companion1, companion2, 
+							  enemy1, enemy2, enemy3];
+			//Push data into all displays
+			for (var i:int = 0; i < allDisplays.length; i += 1) {
+				// if an entity is active draw its data to thes screen
+				if (allEntities[i].active) {
+					allDisplays[i].HP.text = "" + allEntities[i].HP + "";
+					allDisplays[i].MP.text = "" + allEntities[i].MP + "";
+					allDisplays[i].SP.text = "" + allEntities[i].SP + "";
+				}
+			}
 		}
 	}
 	

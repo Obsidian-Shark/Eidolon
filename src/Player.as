@@ -45,18 +45,20 @@
 		}
 		//Plug in data for combat
 		public function loadCombat():void {
-			CombatAI.pc.name = name;
-			CombatAI.pc.str = str;
-			CombatAI.pc.endr = endr;
-			CombatAI.pc.agi = agi;
-			CombatAI.pc.dex = dex;
-			CombatAI.pc.wis = wis;
-			CombatAI.pc.maxHP = maxHP;
-			CombatAI.pc.maxMP = maxMP;
-			CombatAI.pc.maxSP = maxSP;
-			CombatAI.pc.HP = HP;
-			CombatAI.pc.MP = MP;
-			CombatAI.pc.SP = SP;
+			var pc = CombatAI.playerTeam[0];
+			pc.active = true;
+			pc.name = name;
+			pc.str = str;
+			pc.endr = endr;
+			pc.agi = agi;
+			pc.dex = dex;
+			pc.wis = wis;
+			pc.maxHP = maxHP;
+			pc.maxMP = maxMP;
+			pc.maxSP = maxSP;
+			pc.HP = HP;
+			pc.MP = MP;
+			pc.SP = SP;
 		}
 		//Player loots item
 		public function loot(item:Object, num:Number):void {

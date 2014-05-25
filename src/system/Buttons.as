@@ -1,4 +1,4 @@
-package system {
+﻿package system {
 	import flash.events.MouseEvent;
 	import flash.display.MovieClip;
 	import system.*;
@@ -85,17 +85,16 @@ package system {
 		//Attack a target
 		public function attack(e:MouseEvent):void {
 			//If there are multiple targets, switch on the ability to select a target
-			if (CombatAI.e2.active) {
+			if (CombatAI.getActiveMembers(CombatAI.enemyTeam).length > 1) {
 				Core.text.fightText("Who do wish to target?", true);
-				Core.screen.combat.e1Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
-				Core.screen.combat.e2Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
-				if (CombatAI.e3.active) {
-					Core.screen.combat.e3Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
+				for (var i:int =1; i < 4; i += 1) {
+					Core.screen.combat["e" + i + "Target"].addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
 				}
+				
 			}
 			//if single enemy, automatically target and attack
 			else {
-				CombatAI.pc.manualAttack(CombatAI.e1);
+				CombatAI.playerTeam[0].manualAttack(CombatAI.enemyTeam[0]);
 			}
 		}
 		

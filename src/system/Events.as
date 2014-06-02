@@ -1,4 +1,4 @@
-package system {
+﻿package system {
 	
 	/**
 	 * ...
@@ -35,7 +35,7 @@ package system {
 				}
 				else {
 					Core.screen.switchTo("Combat");
-					CombatAI.loadEncounter("Eidolon");
+					BattleSys.loadEncounter("Eidolon");
 				}
 			}
 			trace("eventID = " + eventID + "");

@@ -8,7 +8,7 @@
 	 * @author Void Director...
 	 */
 
-	dynamic public class Entity{;
+	dynamic public class Entity {
 	public var active:Boolean = false;
 	public var name:String = "";
 	public var maxHP:Number = 0;
@@ -24,6 +24,13 @@
 	public var wis:Number = 0;
 	//This string labels what AI behavior the Entity should be running on
 	public var behavior:String = "";
+	//Flavor text for combat... this should be all the default text
+	public var abilityTxt:String;
+	public var attackText:String;
+	public var blockTxt:String;
+	public var dodgeTxt:String;
+	public var dmgTxt:String;
+	public var seduceTxt:String;
 
 	public function Entity()
 	{
@@ -43,7 +50,7 @@
 	public function aggressive():void
 	{
 		//Aggressive enemies will always target the character with highest health amd focus on physical damage and abilities
-		var targets:Array = CombatAI.getActiveMembers(CombatAI.playerTeam);
+		var targets:Array = BattleSys.getActiveMembers(BattleSys.playerTeam);
 		trace("Array length = " + targets.length + "");
 		
 		//Sorts available targets in array by their current HP
@@ -57,27 +64,28 @@
 	//AI uses this function for attacking;
 	public function autoAttack(target:Entity):void
 	{
-		Core.text.fightText("\r" + this.name + " launches an attack at " + target.name + "!", false);
+		Core.text.fightText(attackText, false);
 		dealDamage(this.str, target);
 		trace("" + this.name + " attacks!");
 	}
 	//Used by Player for attacking
 	public function manualAttack(target:Entity):void
 	{
-		Core.text.fightText("\r\rYou launch an attack at " + target.name + "!", false);
+		Core.text.fightText(attackText, false);
 		dealDamage(this.str, target);
-		CombatAI.runAllTurns();
+		BattleSys.runAllTurns();
 	}
 	//Dodge check... to be added later
 	//Deal damage...duh
 	public function dealDamage(amount:Number, target:Entity):void
 	{
+		var dmg:int;
 		target.HP -=  amount;
 		Core.text.fightText("\r" + target.name + " takes " + amount + " points of damage", false);
 		if (target.HP <= 0)
 		{
 			target.HP = 0;
-			CombatAI.killPC();
+			//BattleSys.killTraget();
 		}
 		Core.screen.combat.refreshDisplays();
 		trace("" +target.name + " takes " + amount + " points of damage");

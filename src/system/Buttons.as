@@ -85,7 +85,7 @@
 		//Attack a target
 		public function attack(e:MouseEvent):void {
 			//If there are multiple targets, switch on the ability to select a target
-			if (CombatAI.getActiveMembers(CombatAI.enemyTeam).length > 1) {
+			if (BattleSys.getActiveMembers(BattleSys.enemyTeam).length > 1) {
 				Core.text.fightText("Who do wish to target?", true);
 				for (var i:int =1; i < 4; i += 1) {
 					Core.screen.combat["e" + i + "Target"].addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
@@ -94,7 +94,7 @@
 			}
 			//if single enemy, automatically target and attack
 			else {
-				CombatAI.playerTeam[0].manualAttack(CombatAI.enemyTeam[0]);
+				BattleSys.playerTeam[0].manualAttack(BattleSys.enemyTeam[0]);
 			}
 		}
 		

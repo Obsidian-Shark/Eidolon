@@ -47,7 +47,7 @@
 		}
 		//Load up data when an encounter is triggered.
 		public function startFight():void {
-			var allEntities = [].concat(CombatAI.playerTeam, CombatAI.enemyTeam);
+			var allEntities = [].concat(BattleSys.playerTeam, BattleSys.enemyTeam);
 			var allDisplays = [player, companion1, companion2, 
 							  enemy1, enemy2, enemy3];
 			//Push data into all displays
@@ -67,7 +67,7 @@
 		}
 		
 		private function updateDisplay(): void {
-			var allEntities = [].concat(CombatAI.playerTeam, CombatAI.enemyTeam),
+			var allEntities = [].concat(BattleSys.playerTeam, BattleSys.enemyTeam),
 				allDisplays = [player, companion1, companion2, 
 							  enemy1, enemy2, enemy3];
 			//Push data into all displays

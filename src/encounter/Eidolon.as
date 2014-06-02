@@ -12,8 +12,9 @@
 		}
 		
 		public static function loadEidolon():void {
-			var EidolonEntity = CombatAI.enemyTeam[0];
+			var EidolonEntity = BattleSys.enemyTeam[0];
 			EidolonEntity.active = true;
+			//Combat important stuff
 			EidolonEntity.name = "Eidolon";
 			EidolonEntity.maxHP = EidolonEntity.HP;
 			EidolonEntity.maxMP = EidolonEntity.MP;
@@ -26,16 +27,12 @@
 			EidolonEntity.dex = 999;
 			EidolonEntity.agi = 999;
 			EidolonEntity.wis = 999;
+			//Assigned behavior
 			EidolonEntity.behavior = "Aggressive";
-		}
-		//Text for the encounter, triggered based on situation
-		public static function flavorText(id:Number):void {
-			//Default text
-			if (id == 01) {
-				Core.text.fightText("Eidolon towers over you, covered in a full suit of pristine white armor. A tower shield covers its left arm while a massive sword rests on its right shoulder, right hand wrapped around the handle. Though you can't see its face, you can feel it staring at you... waiting.", true);
-			}
-			//Targeting text
-			//Attack text
+			//Flavor text
+			EidolonEntity.attackTxt = "\rEidolon swings its massive sword at {0} in an overhead arc with massive force.";
+			EidolonEntity.defaultTxt = "\rEidolon towers over you, completely encased in pristine white armor and armed with a massive tower shield and an equally large sword. You can't see anything in the shadow of its visor but you can feel an intense stare focused on you.";
+			EidolonEntity.dmgTxt = "\rEidolon flinches slightly against {1}'s attack, taking {0} damage.";			
 		}
 	}
 	

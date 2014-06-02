@@ -1,4 +1,4 @@
-package system {
+﻿package system {
 	
 	/**
 	 * ...
@@ -23,7 +23,7 @@ package system {
 		public function fightText(text:String, reset:Boolean):void {
 			if (reset == false) outputText = outputText + text;
 			else outputText = text;
-			Core.screen.combat.text.htmlText = outputText;
+			Core.screen.combat.text.htmlText = outputText;			
 		}
 	}
 	

@@ -45,7 +45,7 @@
 		}
 		//Plug in data for combat
 		public function loadCombat():void {
-			var pc = CombatAI.playerTeam[0];
+			var pc = BattleSys.playerTeam[0];
 			pc.active = true;
 			pc.name = name;
 			pc.str = str;

@@ -1,7 +1,7 @@
 ﻿package system {
-	import flash.events.ActivityEvent;
-	import templates.*;
 	import encounter.*;
+	import mx.utils.*;
+	import templates.*;
 	
 	/**
 	 * ...
@@ -13,7 +13,8 @@
 		public static var playerTeam = [ new Entity, new Entity, new Entity];
 		public static var enemyTeam = [ new Entity, new Entity, new Entity];
 		public static var turnOrder:Array = new Array();
-		public static var defaultTxt:String = "You are fighting {0}.";
+		public static var defaultTxt:String = "You are fighting {0}.\r";
+		private static var parsedString:String = "";
 		
 		public function BattleSys() {
 			//constructor code
@@ -25,7 +26,8 @@
 			switch(id) {
 				case "Eidolon":
 					Eidolon.loadEidolon();
-					Core.text.fightText(defaultTxt, true);
+					var parsedString = StringUtil.substitute(defaultTxt, "Eidolon"); 
+					Core.text.flavText(parsedString, true);
 				break;
 			}
 			id = "";
@@ -62,9 +64,18 @@
 			}
 			trace(turnOrder);
 		}
-		//Kill the target and remove them from turn order... unless PC, then end the encounter
+		//Kill the target and remove them from turn order
 		public static function killTarget():void {
-			Core.text.fightText("You fall to your knees, defeated", true);
+			
+		}
+		//End combat... only if all enemies are killed or PC is killed
+		public static function endCombat():void {
+			Core.screen.combat.resume.visible = true;
+			//Disable combat buttons
+			Core.screen.combat.attack.mouseEnabled = false;
+			Core.screen.combat.skills.mouseEnabled = false;
+			Core.screen.combat.magic.mouseEnabled = false;
+			Core.screen.combat.flee.mouseEnabled = false;
 		}
 		
 	}

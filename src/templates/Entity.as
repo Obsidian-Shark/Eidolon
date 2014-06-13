@@ -1,6 +1,7 @@
 ﻿package templates
 {
 	import system.*;
+	import mx.utils.*;
 
 	/**
 	 * ...
@@ -10,6 +11,7 @@
 
 	dynamic public class Entity {
 	public var active:Boolean = false;
+	public var lvl:Number
 	public var name:String = "";
 	public var maxHP:Number = 0;
 	public var maxMP:Number = 0;
@@ -25,12 +27,17 @@
 	//This string labels what AI behavior the Entity should be running on
 	public var behavior:String = "";
 	//Flavor text for combat... this should be all the default text
-	public var abilityTxt:String;
-	public var attackText:String;
-	public var blockTxt:String;
-	public var dodgeTxt:String;
-	public var dmgTxt:String;
-	public var seduceTxt:String;
+	public var abilityTxt:String = "";
+	public var attackTxt:String = "{0} attacks {1}!";
+	public var blockTxt:String = "{0} blocks {1}'s attack, nullifying any potential damage.";
+	public var defeatTxt:String = "{0} defeats {1}!.";
+	public var dodgeTxt:String = "{0} dodges {1}'s attack!";
+	public var dmgTxt:String = "{0} takes {1} points of damage.";
+	public var parryTxt:String = "{0} parries {1}'s attack, taking no damage.";
+	public var seduceTxt:String = "{0} increases {1}'s lust.";
+	//Equipped items
+	public var weapon1:Object = { };
+	public var weapon2:Object = { };
 
 	public function Entity()
 	{
@@ -64,31 +71,46 @@
 	//AI uses this function for attacking;
 	public function autoAttack(target:Entity):void
 	{
-		Core.text.fightText(attackText, false);
-		dealDamage(this.str, target);
+		var parsedString = StringUtil.substitute(this.attackTxt, this.name, target.name);
+		Core.text.fightText("\r"+parsedString+"\r", false);
+		dodgeCheck(target);
 		trace("" + this.name + " attacks!");
 	}
 	//Used by Player for attacking
 	public function manualAttack(target:Entity):void
 	{
-		Core.text.fightText(attackText, false);
-		dealDamage(this.str, target);
+		var parsedString = StringUtil.substitute(this.attackTxt, this.name, target.name);
+		Core.text.fightText(""+parsedString+"\r", true);
+		dodgeCheck(target);
 		BattleSys.runAllTurns();
 	}
 	//Dodge check... to be added later
+	public function dodgeCheck(target:Entity):void {
+		if (Math.random() < (this.agi / target.dex)) {
+			dealDamage(this.str, target);
+			trace("" + target.name + " is hit!");
+		}
+		else {
+			var parsedString = StringUtil.substitute(this.dodgeTxt, target.name, this.name);
+			Core.text.fightText(parsedString, false);
+			trace("" + target.name + " dodged the attack");
+		}
+	}
 	//Deal damage...duh
-	public function dealDamage(amount:Number, target:Entity):void
+	public function dealDamage(dmg:Number, target:Entity):void
 	{
-		var dmg:int;
-		target.HP -=  amount;
-		Core.text.fightText("\r" + target.name + " takes " + amount + " points of damage", false);
+		target.HP -=  dmg;
+		var parsedString = StringUtil.substitute(this.dmgTxt, target.name, dmg);
+		Core.text.fightText(""+parsedString+"\r", false);
 		if (target.HP <= 0)
 		{
 			target.HP = 0;
-			//BattleSys.killTraget();
+			var parsedString2 = StringUtil.substitute(target.defeatTxt, this.name, target.name);
+			Core.text.fightText("" + parsedString2 + "\r", false);
+			BattleSys.endCombat();
 		}
 		Core.screen.combat.refreshDisplays();
-		trace("" +target.name + " takes " + amount + " points of damage");
+		trace("" +target.name + " takes " + dmg + " points of damage");
 	}
 	//Healing... though there's no spell system right now.
 	private function heal(target:Entity):void

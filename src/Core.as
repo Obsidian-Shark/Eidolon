@@ -15,13 +15,15 @@
 	 * various online tutorials of varying sources
 	 */
 	
-	//EIDOLON Version 1.00
+	//EIDOLON Version 1.02
 	//The code-base has a name now
 	/*UPDATE & FIXES CHANGELOG
-	*(ver. 1.01.00)... bug-squashing, feature changes and additions, etc. should be listed under here, inlcuding date started and date finished
+	*(ver. 1.01.00)... bug-squashing, feature changes and additions, etc. should be listed under here.
 	* CombatAI.as renamed to BattleSys.as
 	* Void Director streamlined coding for the combat system... hooray!
-	* 
+	* (ver 1.02.00)
+	* Finished and balanced rudimentary functions of combat thanks to Void Director
+	* Eidolon and Caetus stats balanced... though Eidolon is still over-powered a bit. Should be fixed when equipment modifiers are set-up
 	*/
 	public class Core extends Sprite {
 		public static var btn:Buttons = new Buttons();

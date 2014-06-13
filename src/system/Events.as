@@ -44,15 +44,15 @@
 		public function loadPlayer():void {
 			Core.pc.name = "Ceatus";
 			Core.pc.level = 99;
-			Core.pc.str = 999;
-			Core.pc.endr = 999;
-			Core.pc.dex = 999;
-			Core.pc.agi = 999;
-			Core.pc.wis = 999;
+			Core.pc.str = 42;
+			Core.pc.endr = 30;
+			Core.pc.dex = 75;
+			Core.pc.agi = 150;
+			Core.pc.wis = 50;
 			Core.pc.chrs = 999;
-			Core.pc.maxHP = Core.pc.endr * 2.5;
-			Core.pc.maxMP = Core.pc.wis * 2.5;
-			Core.pc.maxSP = Core.pc.dex * 2.5;
+			Core.pc.maxHP = Math.round((Core.pc.endr * 10.5)*1);
+			Core.pc.maxMP = Math.round((Core.pc.wis *10.5)*1);
+			Core.pc.maxSP = Math.round((Core.pc.endr + Core.pc.str * 2.5)*1);
 			Core.pc.HP = Core.pc.maxHP;
 			Core.pc.MP = Core.pc.maxMP;
 			Core.pc.SP = Core.pc.maxSP;

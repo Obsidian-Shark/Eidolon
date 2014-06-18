@@ -44,8 +44,7 @@
 			text2.text = "";
 			//Set eventlisteners to the buttons
 			attack.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.attack);
-			resume.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toMain);
-			
+			resume.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toGame);
 		}
 		//Load up data when an encounter is triggered.
 		public function startFight():void {

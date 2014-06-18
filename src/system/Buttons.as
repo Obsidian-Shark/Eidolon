@@ -27,7 +27,7 @@
 		}
 		//Flush button data to prevent glitches and errors <designed by Void Director>
 		public function flushBtns():void {
-			for (var i:int = 0; i < 15; i += 1) {
+			for (var i:int = 0; i < 12; i += 1) {
 				//Default the button visibility to false
 				Core.screen.game["btn" + (i + 1)].visible = false;
 				//Flush the btnID array
@@ -63,7 +63,8 @@
 		//Go to Game screen
 		public function toGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			Core.event.testEngine(001);
+			Core.event.testEngine(Core.event.eventID);
+			Core.screen.game.refreshUI();
 			trace("eventID = " +Core.event.eventID+"");
 		}
 		//Go to the Main menu

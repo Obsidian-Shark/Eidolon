@@ -15,7 +15,7 @@
 	 * various online tutorials of varying sources
 	 */
 	
-	//EIDOLON Version 1.02
+	//EIDOLON Version 1.03
 	//The code-base has a name now
 	/*UPDATE & FIXES CHANGELOG
 	*(ver. 1.01.00)... bug-squashing, feature changes and additions, etc. should be listed under here.
@@ -24,6 +24,10 @@
 	* (ver 1.02.00)
 	* Finished and balanced rudimentary functions of combat thanks to Void Director
 	* Eidolon and Caetus stats balanced... though Eidolon is still over-powered a bit. Should be fixed when equipment modifiers are set-up
+	* (ver. 1.03.00)
+	* Added Baldr profile along with a menu to choose between pre-set characters
+	* Personality scores to Player.as added
+	* Tweaked some button functionality for screen switching
 	*/
 	public class Core extends Sprite {
 		public static var btn:Buttons = new Buttons();

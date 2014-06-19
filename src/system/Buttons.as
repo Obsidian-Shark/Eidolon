@@ -25,32 +25,60 @@
 			Core.screen.game["btn" + btnNum].text.text = label;
 			btnID[btnNum - 1] = eventID;
 		}
+		
+		// New version of button for intepreter, alows seting a custom callback.
+		public function setButton(btnNum:int, label:String):void  {
+			Core.screen.game["btn" + btnNum].visible = true;
+			Core.screen.game["btn" + btnNum].text.text = label;
+		}
+		
 		//Flush button data to prevent glitches and errors <designed by Void Director>
 		public function flushBtns():void {
 			for (var i:int = 0; i < 12; i += 1) {
 				//Default the button visibility to false
-				Core.screen.game["btn" + (i + 1)].visible = false;
+				hideButton(i)
 				//Flush the btnID array
 				btnID[i] = 0;
 			}
 		}
+		
+		public function hideButton(btnNumber): void {
+			Core.screen.game["btn" + (btnNumber + 1)].visible = false;
+		}
+		
+		// An array of callbacks (functions stored in variables) used to customize the effects of buttons
+		private var buttonEffects:Array = [];
+		
+		public function setButtonEvent(btnNum:int, callback:Function): void {
+			buttonEffects[btnNum] = callback;
+		}
+		
 		//Initialize the button array on Game screen
 		public function initBtn():void {
 			for (var i:int = 0; i < 12; i ++) {
 				var btnEventHandler:Function = onClick(i)
 				function onClick(btnNumber:int):Function {
 					return function(e:MouseEvent):void {
-						if (btnID[btnNumber] == 0) {
-							Core.text.mainText("No assignment.\r", false);
-							return;
+						if (buttonEffects[btnNumber]) {
+							buttonEffects[btnNumber](btnNumber);
+						} else {
+							defaultButtonEffect(btnNumber);
 						}
-						Core.event.eventID = btnID[btnNumber];
-						Core.event.testEngine(Core.event.eventID);
 					};
 				}
 				Core.screen.game["btn" + (i + 1)].addEventListener(MouseEvent.MOUSE_DOWN, btnEventHandler);
 			}
 		}
+		
+		private function defaultButtonEffect(btnNumber:int):void {
+			if (btnID[btnNumber] == 0) {
+				Core.text.mainText("No assignment.\r", false);
+				return;
+			}
+			Core.event.eventID = btnID[btnNumber];
+			Core.event.testEngine(Core.event.eventID);
+		}
+		
 		//Start a new game... be sure to flush previous data to avoid errors (data flush should be a separate function or however you know how to do it)
 		public function newGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
@@ -63,8 +91,7 @@
 		//Go to Game screen
 		public function toGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			Core.event.testEngine(Core.event.eventID);
-			Core.screen.game.refreshUI();
+			Core.event.testEngine(001);
 			trace("eventID = " +Core.event.eventID+"");
 		}
 		//Go to the Main menu
@@ -86,16 +113,17 @@
 		//Attack a target
 		public function attack(e:MouseEvent):void {
 			//If there are multiple targets, switch on the ability to select a target
-			if (BattleSys.getActiveMembers(BattleSys.enemyTeam).length > 1) {
+			if (CombatAI.e2.active) {
 				Core.text.fightText("Who do wish to target?", true);
-				for (var i:int =1; i < 4; i += 1) {
-					Core.screen.combat["e" + i + "Target"].addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
+				Core.screen.combat.e1Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
+				Core.screen.combat.e2Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
+				if (CombatAI.e3.active) {
+					Core.screen.combat.e3Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
 				}
-				
 			}
 			//if single enemy, automatically target and attack
 			else {
-				BattleSys.playerTeam[0].manualAttack(BattleSys.enemyTeam[0]);
+				CombatAI.pc.manualAttack(CombatAI.e1);
 			}
 		}
 		

@@ -12,29 +12,29 @@
 		}
 		
 		public static function loadEidolon():void {
-			var EidolonEntity = BattleSys.enemyTeam[0];
-			EidolonEntity.active = true;
-			EidolonEntity.lvl = 99;
-			//Combat important stuff
-			EidolonEntity.name = "Eidolon";
-			EidolonEntity.str = 115;
-			EidolonEntity.endr = 160;
-			EidolonEntity.dex = 35;
-			EidolonEntity.agi = 12;
-			EidolonEntity.wis = 25;
-			EidolonEntity.maxHP = Math.round((EidolonEntity.endr * 10.5)*1);
-			EidolonEntity.maxMP = Math.round((EidolonEntity.wis * 10.5)*1);
-			EidolonEntity.maxSP = Math.round((EidolonEntity.endr + EidolonEntity.str * 2.5)*1);
-			EidolonEntity.HP = EidolonEntity.maxHP;
-			EidolonEntity.MP = EidolonEntity.maxMP;
-			EidolonEntity.SP = EidolonEntity.maxSP;
-			//Assigned behavior
-			EidolonEntity.behavior = "Aggressive";
-			//Flavor text
-			EidolonEntity.attackTxt = "{0} swings its massive sword in an overhead arc at {1}!";
-			BattleSys.defaultTxt = "{0} towers over you, completely encased in pristine white armor and armed with a massive tower shield and an equally large sword. You can't see anything in the shadow of its visor but you can feel an intense stare focused on you.\r";
-			//EidolonEntity.dmgTxt = "";
-			//EidolonEntity.dodgeTxt = "";
+			CombatAI.e1.active = true;
+			CombatAI.e1.name = "Eidolon";
+			CombatAI.e1.maxHP = CombatAI.e1.HP;
+			CombatAI.e1.maxMP = CombatAI.e1.MP;
+			CombatAI.e1.maxSP = CombatAI.e1.SP;
+			CombatAI.e1.HP = 9999;
+			CombatAI.e1.MP = 9999;
+			CombatAI.e1.SP = 9999;
+			CombatAI.e1.str = 999;
+			CombatAI.e1.endr = 999;
+			CombatAI.e1.dex = 999;
+			CombatAI.e1.agi = 999;
+			CombatAI.e1.wis = 999;
+			CombatAI.e1.behavior = "Aggressive";
+		}
+		//Text for the encounter, triggered based on situation
+		public static function flavorText(id:Number):void {
+			//Default text
+			if (id == 01) {
+				Core.text.fightText("Eidolon towers over you, covered in a full suit of pristine white armor. A tower shield covers its left arm while a massive sword rests on its right shoulder, right hand wrapped around the handle. Though you can't see its face, you can feel it staring at you... waiting.", true);
+			}
+			//Targeting text
+			//Attack text
 		}
 	}
 	

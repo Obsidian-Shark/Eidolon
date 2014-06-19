@@ -10,8 +10,13 @@
 	 */
 	
 	public class CombatAI	{
-		public static var playerTeam = [ new Entity, new Entity, new Entity];
-		public static var enemyTeam = [ new Entity, new Entity, new Entity];
+		public static var pc:Entity = new Entity;
+		public static var c1:Entity = new Entity;
+		public static var c2:Entity = new Entity;
+		public static var e1:Entity = new Entity;
+		public static var e2:Entity = new Entity;
+		public static var e3:Entity = new Entity;
+		
 		private static var turnOrder:Array = new Array();
 		
 		public function CombatAI() {
@@ -33,24 +38,8 @@
 		}
 		//Pushes entity objects in turn array if there is data in them
 		private static function setTurns():void {
-			// Gets all the active members of the teams then adds them to the turnOrder array.
-			trace (turnOrder)
-			trace (getActiveMembers(playerTeam).length + " " + getActiveMembers(enemyTeam).length)
-			turnOrder = turnOrder.concat(getActiveMembers(playerTeam), getActiveMembers(enemyTeam));
-			trace(turnOrder.length);
+			if (e1.active) turnOrder.push(e1);
 		}
-		
-		// Returns an array containing all the membrs of a team which are active
-		public static function getActiveMembers(team) {
-			var activeMembers = [];
-			for (var i:int = 0; i < team.length; i += 1) {
-				if (team[i].active) {
-					activeMembers.push(team[i]);
-				}
-			}
-			return activeMembers;
-		}
-											   
 		//Designed by Void Director to set turn order and cycle through turns.
 		public static function runAllTurns():void {
 			//Sorts turn order by agility score... though Player always goes first

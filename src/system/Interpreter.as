@@ -72,10 +72,10 @@
 			Core.text.clearText();
 			for (var i:int = 0; i < textData.length; i += 1) {
 				if (typeof(textData[i]) === "string") {
-					Core.text.addText(textData[i]);
+					Core.text.addText(Core.parser.parse(textData[i]));
 				} else {
 					if (reqsMet(textData[i].reqs)) {
-						Core.text.addText(textData[i].text);
+						Core.text.addText(Core.parser.parse(textData[i].text));
 					}
 				}
 			}

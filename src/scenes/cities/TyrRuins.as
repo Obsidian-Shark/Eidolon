@@ -9,6 +9,7 @@
 			return {
 				explore: {
 					text: [
+						"This is some test data for the parser. The players name is [pc.name] and here is the result of invoking a decription function [pc.mpDesc] \n\n",
 						"Tyr is in absolute ruins. Most of the shops and buildings have been ransacked and burned down. Carts lay broken in the street amongst the corpses of horses, cattle, livestock, and people… some of which you recognize as villagers you’ve known all your life.", 
 						"\r\rArgo’s shop looks like it has been completely ransacked and trashed, but untouched by fire.",
 						"\r\rThe tavern storage room sits open to you. Surprisingly, the interior is intact but the heat of the flames have spoiled the contents of the room. Despite the low light, you check around for anything salvageable to take with you.",

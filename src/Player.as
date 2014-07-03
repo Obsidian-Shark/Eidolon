@@ -39,6 +39,8 @@
 		public var bag:Object = { };
 		public var sigils:int = 0;
 		
+		
+		
 		public function Player() {
 			// constructor code
 			
@@ -87,6 +89,11 @@
 					trace("Player has discarded a " + item.name + " and now have " + bag[item.name].count + " left");
 				}
 			}
+		}
+		
+		// For testing parser, feel free to remove this.
+		public function mpDesc() {
+			return "(" + MP + "/" + maxMP + ") MP "  + maxMP / MP * 100 + "%";
 		}
 	}
 	

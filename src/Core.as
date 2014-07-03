@@ -32,6 +32,7 @@
 	*/
 	public class Core extends Sprite {
 		public static var interpreter:Interpreter = new Interpreter();
+		public static var parser:Parser = new Parser();
 		public static var btn:Buttons = new Buttons();
 		public static var combat:Combat = new Combat();
 		public static var credit:Credits = new Credits();
@@ -47,8 +48,11 @@
 		public static var text:Text = new Text();
 		
 		public function Core() {
-			//constructor code
 			this.addChild(screen);
+			
+			// Add serchable items for the parser to use.
+			// These define objects that the parser can acess properties of
+			parser.addSearchable(pc, "pc");
 		}
 	}
 	

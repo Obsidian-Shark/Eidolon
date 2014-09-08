@@ -1,5 +1,5 @@
 ﻿package system {
-	import scenes.cities.*;
+	import scenes.*;
 	import Core;
 	
 	public class Interpreter {
@@ -10,7 +10,8 @@
 		
 		private var currentSource:String = undefined;
 		private var allData = {
-			tyrRuins: TyrRuins.getData()
+			lorem: Lorem.getData(),
+			test: Events.testMenu()
 		}
 		
 		public function interpret(sceneName) {			
@@ -21,6 +22,7 @@
 				runFlags(sceneData);
 				displayOptions(sceneData);
 				runItems(sceneData);
+				pcStats(sceneData);
 			} else {
 				Core.text.addText("No data for scene " + sceneName);
 			}
@@ -48,7 +50,7 @@
 				if (typeof requirments === "string") {
 					requirments = [requirments];
 				}
-				// Split the requirment into type and data eg flags.thisflag will be split into ["flags", "thisflag"]
+				// Split the requirement into type and data eg flags.thisflag will be split into ["flags", "thisflag"]
 				var split;
 				for (var i = 0; i < requirments.length; i += 1) {
 					split = requirments[i].split(".");
@@ -57,8 +59,15 @@
 						if (Core.flags[split[1]] === false || Core.flags[split[1]] === undefined) {
 							return false;
 						}
-					} else {
+						if (Core.pc[split[1]] === false || Core.pc[split[1]] === undefined) {
+							return false;
+						}
+					} 
+					else {
 						if (Core.flags[split[1]] === true ) {
+							return false;
+						}
+						if (Core.pc[split[1]] === true ) {
 							return false;
 						}
 					}
@@ -115,7 +124,14 @@
 				}
 			}
 		}
-		
+		private function pcStats(sceneData) {
+			var pcData = sceneData.pc;
+			if (pcData) {
+				for (var i:int = 0; i < pcData.length; i += 1) {
+					Core.pc[pcData[i].pc] =  pcData[i].newValue;
+				}
+			}
+		}
 		private function runItems(sceneData) {
 			var itemsData = sceneData.items;
 			if (itemsData) {
@@ -132,8 +148,8 @@
 				// Set a flag to remeber the item was looted.
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 				
-				// Here is where we would actually add the item to the player but items
-				// are not implemented in edilion yet so I will wait until they are
+				//Adding item to Player's inventory
+				Core.pc.loot(itemData.item, 1);
 				
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {

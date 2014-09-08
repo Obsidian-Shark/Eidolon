@@ -1,5 +1,7 @@
 ﻿package {
+	import flash.display.GraphicsPathWinding;
 	import system.*;
+	import lists.*;
 	
 	/**
 	 * ...
@@ -13,6 +15,7 @@
 		public var name:String = "";
 		public var level:int = 0;
 		public var exp:int = 0;
+		public var gender:String = "";
 		//Combat stats
 		public var str:int = 0; //Strength
 		public var endr:int = 0; //Endurance
@@ -26,7 +29,16 @@
 		public var maxMP:int = 0;
 		public var SP:int = 0;
 		public var maxSP:int = 0;
-				//Equipment Slots
+		//Personality stats
+		public var aggression:int = 0; //Violent response
+		public var discipline:int = 0; //Impulse control
+		public var dominate:int = 0; //Domination behavior
+		public var honesty:int = 0; //Truth or Lies
+		public var submissive:int = 0; //Submissive behavior
+		public var trust:int = 0; //Trusting/Suspicious person
+		public var vile:int = 0; //Evil/Rude person
+		public var virtuous:int = 0; //Good/Honorable person
+		//Equipment Slots
 		public var accSlot:Object = { };
 		public var chestSlot:Object = { };
 		public var feetSlot:Object = { };
@@ -36,29 +48,101 @@
 		public var weapon1Slot:Object = { };
 		public var weapon2Slot:Object = { };
 		//Inventory
-		public var bag:Object = { };
+		public var bag:Object = {  };
 		public var sigils:int = 0;
-		
-		
 		
 		public function Player() {
 			// constructor code
 			
 		}
+		//PRE-SET PROFILES FOR TESTING
+		//Ceatus
+		public function loadCaetus():void {
+			Core.pc.name = "Caetus";
+			Core.pc.gender = "Female";
+			Core.pc.level = 99;
+			Core.pc.str = 62;
+			Core.pc.endr = 30;
+			Core.pc.dex = 75;
+			Core.pc.agi = 130;
+			Core.pc.wis = 50;
+			Core.pc.chrs = 999;
+			Core.pc.maxHP = Math.round((Core.pc.endr * 10.5)*1);
+			Core.pc.maxMP = Math.round((Core.pc.wis *10.5)*1);
+			Core.pc.maxSP = Math.round((Core.pc.endr + Core.pc.str * 2.5)*1);
+			Core.pc.HP = Core.pc.maxHP;
+			Core.pc.MP = Core.pc.maxMP;
+			Core.pc.SP = Core.pc.maxSP;
+			//Personality
+			Core.pc.aggression = 25;
+			Core.pc.discipline = 65;
+			Core.pc.dominate = 50;
+			Core.pc.honesty = 50;
+			Core.pc.submissive = 50;
+			Core.pc.trust = 30;
+			Core.pc.vile = 10;
+			Core.pc.virtuous = 70;
+			//Arm this bitch
+			Core.pc.weapon1Slot = ItemLibrary.LevthFang;
+			Core.pc.weapon2Slot = ItemLibrary.Fist;
+			Core.pc.chestSlot = ItemLibrary.LagiasKntChst;
+			Core.pc.feetSlot = ItemLibrary.LagiasKntGrv;
+			Core.pc.handSlot = ItemLibrary.LagiasKntGlv;
+			Core.pc.legSlot = ItemLibrary.LagiasKntLgs;
+			trace("Profile Caetus has been loaded into Player.as");
+			trace("" + weapon1Slot.name + "");
+			trace("" + weapon2Slot.name + "");
+		}
+		//Baldr
+		public function loadBaldr():void {
+			Core.pc.name = "Baldr";
+			Core.pc.gender = "Male";
+			Core.pc.level = 99;
+			Core.pc.str = 150;
+			Core.pc.endr = 80;
+			Core.pc.dex = 40;
+			Core.pc.agi = 40;
+			Core.pc.wis = 37;
+			Core.pc.chrs = 999;
+			Core.pc.maxHP = Math.round((Core.pc.endr * 10.5)*1);
+			Core.pc.maxMP = Math.round((Core.pc.wis *10.5)*1);
+			Core.pc.maxSP = Math.round((Core.pc.endr + Core.pc.str * 2.5)*1);
+			Core.pc.HP = Core.pc.maxHP;
+			Core.pc.MP = Core.pc.maxMP;
+			Core.pc.SP = Core.pc.maxSP;
+			//Personality
+			Core.pc.aggression = 25;
+			Core.pc.discipline = 65;
+			Core.pc.dominate = 50;
+			Core.pc.honesty = 50;
+			Core.pc.submissive = 50;
+			Core.pc.trust = 30;
+			Core.pc.vile = 10;
+			Core.pc.virtuous = 70;
+			trace("Profile Baldr has been loaded into Player.as");
+		}
 		//Plug in data for combat
 		public function loadCombat():void {
-			CombatAI.pc.name = name;
-			CombatAI.pc.str = str;
-			CombatAI.pc.endr = endr;
-			CombatAI.pc.agi = agi;
-			CombatAI.pc.dex = dex;
-			CombatAI.pc.wis = wis;
-			CombatAI.pc.maxHP = maxHP;
-			CombatAI.pc.maxMP = maxMP;
-			CombatAI.pc.maxSP = maxSP;
-			CombatAI.pc.HP = HP;
-			CombatAI.pc.MP = MP;
-			CombatAI.pc.SP = SP;
+			var pc = BattleSys.playerTeam[0];
+			pc.active = true;
+			pc.name = name;
+			pc.str = str;
+			pc.endr = endr;
+			pc.agi = agi;
+			pc.dex = dex;
+			pc.wis = wis;
+			pc.maxHP = maxHP;
+			pc.maxMP = maxMP;
+			pc.maxSP = maxSP;
+			pc.HP = HP;
+			pc.MP = MP;
+			pc.SP = SP;
+			pc.weapon1 = weapon1Slot;
+			pc.weapon2 = weapon2Slot;
+			pc.chestArmr = chestSlot;
+			pc.feetArmr = feetSlot;
+			pc.handArmr = handSlot;
+			pc.legArmr = legSlot;
 		}
 		//Player loots item
 		public function loot(item:Object, num:Number):void {
@@ -89,11 +173,6 @@
 					trace("Player has discarded a " + item.name + " and now have " + bag[item.name].count + " left");
 				}
 			}
-		}
-		
-		// For testing parser, feel free to remove this.
-		public function mpDesc() {
-			return "(" + MP + "/" + maxMP + ") MP "  + maxMP / MP * 100 + "%";
 		}
 	}
 	

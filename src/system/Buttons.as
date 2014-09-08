@@ -2,6 +2,7 @@
 	import flash.events.MouseEvent;
 	import flash.display.MovieClip;
 	import system.*;
+	import misc.*;
 	
 	/**
 	 * ...
@@ -25,13 +26,11 @@
 			Core.screen.game["btn" + btnNum].text.text = label;
 			btnID[btnNum - 1] = eventID;
 		}
-		
 		// New version of button for intepreter, alows seting a custom callback.
-		public function setButton(btnNum:int, label:String):void  {
+		public function setButton(btnNum:int, label:String):void {
 			Core.screen.game["btn" + btnNum].visible = true;
 			Core.screen.game["btn" + btnNum].text.text = label;
 		}
-		
 		//Flush button data to prevent glitches and errors <designed by Void Director>
 		public function flushBtns():void {
 			for (var i:int = 0; i < 12; i += 1) {
@@ -41,7 +40,6 @@
 				btnID[i] = 0;
 			}
 		}
-		
 		public function hideButton(btnNumber): void {
 			Core.screen.game["btn" + (btnNumber + 1)].visible = false;
 		}
@@ -78,11 +76,11 @@
 			Core.event.eventID = btnID[btnNumber];
 			Core.event.testEngine(Core.event.eventID);
 		}
-		
 		//Start a new game... be sure to flush previous data to avoid errors (data flush should be a separate function or however you know how to do it)
 		public function newGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			Core.event.testEngine(001);
+			//Core.event.testEngine(001);
+			Core.interpreter.interpret("test.menu");
 		}
 		//Go to the Credits menu
 		public function toCredits(e:MouseEvent):void {
@@ -91,7 +89,8 @@
 		//Go to Game screen
 		public function toGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			Core.event.testEngine(001);
+			Core.event.testEngine(Core.event.eventID);
+			Core.screen.game.refreshUI();
 			trace("eventID = " +Core.event.eventID+"");
 		}
 		//Go to the Main menu
@@ -106,6 +105,18 @@
 		public function toProfile(e:MouseEvent):void {
 			Core.screen.switchTo("Profile");
 		}
+		//Display the save game slots
+		public function saveGame(e:MouseEvent):void {
+			
+		}
+		//Display the load game slots
+		public function loadGame(e:MouseEvent):void {
+			
+		}
+		//Save to file slot 1
+		public function slot1Save(e:MouseEvent):void {
+			Data.saveData("one")
+		}
 		//Select a target if there are multiple enemies
 		public function pickTarget(e:MouseEvent):void {
 			
@@ -113,17 +124,16 @@
 		//Attack a target
 		public function attack(e:MouseEvent):void {
 			//If there are multiple targets, switch on the ability to select a target
-			if (CombatAI.e2.active) {
+			if (BattleSys.getActiveMembers(BattleSys.enemyTeam).length > 1) {
 				Core.text.fightText("Who do wish to target?", true);
-				Core.screen.combat.e1Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
-				Core.screen.combat.e2Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
-				if (CombatAI.e3.active) {
-					Core.screen.combat.e3Target.addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
+				for (var i:int =1; i < 4; i += 1) {
+					Core.screen.combat["e" + i + "Target"].addEventListener(MouseEvent.MOUSE_DOWN, pickTarget);
 				}
+				
 			}
 			//if single enemy, automatically target and attack
 			else {
-				CombatAI.pc.manualAttack(CombatAI.e1);
+				BattleSys.playerTeam[0].manualAttack(BattleSys.enemyTeam[0]);
 			}
 		}
 		

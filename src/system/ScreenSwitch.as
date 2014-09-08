@@ -13,6 +13,7 @@
 		private var currScreen:String = "";
 		public var combat:Combat;
 		public var credit:Credits;
+		public var data:Data;
 		public var game:Game;
 		public var main:MainMenu;
 		public var option:Options;

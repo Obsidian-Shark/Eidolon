@@ -55,7 +55,6 @@
 			//Set eventlisteners to the buttons on screen
 			menu.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toMain);
 			portrait.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toProfile);
-			save.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.saveGame);
 			Core.btn.initBtn();
 		}
 		public function refreshUI():void {

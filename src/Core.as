@@ -1,5 +1,4 @@
 ﻿package {
-	import flash.events.DataEvent;
 	import misc.*;
 	import screens.*;
 	import system.*;
@@ -31,7 +30,7 @@
 		public static var flag:Flags = new Flags();
 		public static var flags = {};
 		public static var pc:Player = new Player();
-		public static var screen:ScreenHandler = new ScreenHandler();
+		public static var screen:ScreenSwitch = new ScreenSwitch();
 		public static var text:Text = new Text();
 		
 		public function Core() {

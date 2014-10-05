@@ -105,13 +105,9 @@
 		public function toProfile(e:MouseEvent):void {
 			Core.screen.switchTo("Profile");
 		}
-		//Close pop-up window
-		public function closePopScrn(e:MouseEvent):void {
-			Core.screen.closePopScreen();
-		}
 		//Display the save game slots
 		public function saveGame(e:MouseEvent):void {
-			Core.screen.toPopScreen("Data");
+			
 		}
 		//Display the load game slots
 		public function loadGame(e:MouseEvent):void {
@@ -119,7 +115,7 @@
 		}
 		//Save to file slot 1
 		public function slot1Save(e:MouseEvent):void {
-			
+			Data.saveData("one")
 		}
 		//Select a target if there are multiple enemies
 		public function pickTarget(e:MouseEvent):void {

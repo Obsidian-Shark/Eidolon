@@ -148,8 +148,8 @@
 				// Set a flag to remeber the item was looted.
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 				
-				//Adding item to Player's inventory
-				Core.pc.loot(itemData.item, 1);
+				// Here is where we would actually add the item to the player but items
+				// are not implemented in edilion yet so I will wait until they are
 				
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {

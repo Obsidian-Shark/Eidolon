@@ -35,13 +35,6 @@
 			switchScreens();
 			trace("Screen switched");
 		}
-<<<<<<< HEAD:src/system/ScreenSwitch.as
-		public function popUp(screenID:String): void {
-			popScreen = screenID;
-			overlayScreen();
-			trace("Pop up screen loaded");
-		}
-=======
 		//Loads the called pop-up screen
 		public function toPopScreen(screenID:String):void {
 			popScreen = screenID;
@@ -50,7 +43,6 @@
 		}
 		//Bridge between the command function and the screen switch list (excluding pop-up screens)
 		//also triggers the function to delete the current screen from the display list
->>>>>>> origin/master:src/system/ScreenHandler.as
 		private function switchScreens(): void {
 			flushOldScreen();
 			loadScreen();

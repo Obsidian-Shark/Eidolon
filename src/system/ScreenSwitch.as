@@ -11,6 +11,7 @@
 	
 	public class ScreenSwitch extends Sprite {
 		private var currScreen:String = "";
+		private var popScreen:String = "";
 		public var combat:Combat;
 		public var credit:Credits;
 		public var data:Data;
@@ -19,6 +20,7 @@
 		public var option:Options;
 		public var profile:Profile;
 		private var screenLayer:Sprite = new Sprite();
+		private var screenOverlay:Sprite = new Sprite();
 		
 		public function ScreenSwitch() {
 			//constructor code
@@ -31,6 +33,11 @@
 			currScreen = screenID;
 			switchScreens();
 			trace("Screen switched");
+		}
+		public function popUp(screenID:String): void {
+			popScreen = screenID;
+			overlayScreen();
+			trace("Pop up screen loaded");
 		}
 		private function switchScreens(): void {
 			flushOldScreen();

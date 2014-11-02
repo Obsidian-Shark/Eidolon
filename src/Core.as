@@ -16,13 +16,14 @@
 	 * various online tutorials of varying sources
 	 */
 	
-	//EIDOLON Version 1.06
+	//EIDOLON Version 1.07
 	/*UPDATE & FIXES CHANGELOG
-	 * Build was rolled back two versions (to 1.05 from 1.07) because combat became horribly broken
-	 * Enabling data screen pop-up window
-	 * Looting items has been setup (untested)
+	 * Switching between screens with an active game has a scene tracking issue. Resolving soon.
+	 * Need to re-add loading preset Player profiles
+	 * Work on adding & removing items from Player inventory as well as use of currency.
 	 * 
 	*/
+	
 	public class Core extends Sprite {
 		public static var interpreter:Interpreter = new Interpreter();
 		public static var parser:Parser = new Parser();
@@ -35,6 +36,7 @@
 		public static var text:Text = new Text();
 		
 		public function Core() {
+			//constructor code
 			this.addChild(screen);
 			
 			// Add serchable items for the parser to use.

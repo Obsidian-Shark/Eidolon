@@ -13,7 +13,11 @@
 			lorem: Lorem.getData(),
 			test: Events.testMenu()
 		}
+		//Tracks 'current' loaded screen in the event the Player switches from the Game screen and back.
+		public static var holdScene:String = "";
 		
+		//Core function to make this work.
+		//Routes sceneData to the appropriate function needed to run (I think?)
 		public function interpret(sceneName) {			
 			var sceneData = getSceneData(sceneName);
 			if (sceneData) {
@@ -23,17 +27,21 @@
 				displayOptions(sceneData);
 				runItems(sceneData);
 				pcStats(sceneData);
+				runCombat(sceneData);
 			} else {
 				Core.text.addText("No data for scene " + sceneName);
 			}
+			holdScene = sceneName;
+			trace(sceneName);
+			trace(holdScene);
 		}
 		
-		private var thisScene:String;
+		public static var thisScene:String;
 		
 		private function refresh() {
 			interpret(thisScene);
 		}
-		
+		//Works in tadem with interpret() to translate data into the correct functions
 		private function getSceneData(sceneName) {
 			if (sceneName.indexOf(".") >= 0) {
 				var split = sceneName.split(".");
@@ -43,7 +51,7 @@
 				return allData[currentSource][sceneName];
 			}
 		}
-		
+		//Checks for the request criteria to trigger (or lock out) a part of a scene
 		private function reqsMet (requirments) {
 			if (requirments) {
 				// If there is only one requirment it might not be in an array
@@ -75,7 +83,7 @@
 			}
 			return true;
 		}
-		
+		//Handles parsing and displaying text in the game window properly
 		private function displayText(sceneData) {
 			var textData = sceneData.text;
 			Core.text.clearText();
@@ -93,13 +101,14 @@
 		private var nextEvents:Array = [];
 		
 		private var nextButtonNumber = 0;
-
+		
+		//Handles generating a 'next' button to move on to the immediate next scene.
 		private function nextButton (text, callback) {
 			Core.btn.setButtonEvent(nextButtonNumber, callback);
 			Core.btn.setButton(nextButtonNumber + 1, text);
 			nextButtonNumber += 1;
 		}
-		
+		//Enables multi-option buttons... basically, multiple choice during scenes.
 		private function displayOptions(sceneData) {
 			var optionData = sceneData.options;
 			Core.btn.flushBtns();
@@ -115,7 +124,16 @@
 				interpret(event);
 			}
 		}
-		
+		//Run combat... still needs extensive work to funciton correctly
+		private function runCombat(sceneData) {
+			var encountData = sceneData.fight;
+			if (encountData) {
+				for (var i:int = 0; i < encountData.length; i += 1) {
+					BattleSys.loadEncounter(encountData);
+				}
+			}
+		}
+		//Check flags... I think?
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
 			if (flagData) {
@@ -124,6 +142,7 @@
 				}
 			}
 		}
+		//Check Player's stats.
 		private function pcStats(sceneData) {
 			var pcData = sceneData.pc;
 			if (pcData) {
@@ -132,6 +151,7 @@
 				}
 			}
 		}
+		//Checks for item before looting them
 		private function runItems(sceneData) {
 			var itemsData = sceneData.items;
 			if (itemsData) {
@@ -142,14 +162,13 @@
 				}
 			}
 		}
-		
+		//Loots item and adds to Player's inventory
 		private function itemEventFactory (itemData):Function {
 			return function(btnNumber):void {
-				// Set a flag to remeber the item was looted.
+				// Set a flag to remeber the item was looted... this needs to be modified from flags to int
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 				
-				// Here is where we would actually add the item to the player but items
-				// are not implemented in edilion yet so I will wait until they are
+				// Here is where we would actually add the item to the player but items... need to implement this properly
 				
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {

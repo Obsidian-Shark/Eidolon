@@ -12,7 +12,6 @@
 			//constructor code
 		}
 		//This is the menu for testing various aspects of the Eidolon engine
-		//Rewritten for new interperter system... no idea if this will actually work
 		public static function testMenu() {
 			return {
 				menu: {
@@ -47,45 +46,68 @@
 				
 				preset: {
 					text: [
-						"Which profile would you like to load? \r\r",
-						"Caetus - a kind-hearted female Mer. Weak in strength but incredibly agile. \r",
-						"Baldr - a powerful, selfish Human. High strength and endurance with moderate dodging ability."
+						"Preset profile is currently unavailable."
 					],
 					options: [
 						{
-							text: "Caetus",
-							event: "loadCaetus"
+							text: "Return",
+							event: "menu"
 						},
-						{
-							text: "Baldr",
-							event: "loadBaldr"
-						}
 					]
 				},
 				
 				combat: {
 					text: [ 
-						{
-							reqs: ["pc.str > 0"],
-							text: "\r\rTrigger Combat."
+						"Combat demonstration is currently unavailable."
+					],
+					regs: ["pc.str > 0"] {
+							fight: "Eidolon"
 						}
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
 					]
-					
 				},
+				
 				dungeon: {
-					
+					text: [
+						"Dungeon demonstration is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				},
 				roamArea: {
-					
+					text: [
+						"Free-roam demonstration is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				},
 				town : {
-					
-				},
-				loadCaetus : {
-					
+					text: [
+						"Lorem (text town) is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				}
 			}
 		}
+		//Old code format
+		//Kept for back-up purposes.
 		public function testEngine(id:Number):void {
 			Core.btn.flushBtns();
 			eventID = id;

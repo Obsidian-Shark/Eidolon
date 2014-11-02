@@ -26,7 +26,7 @@
 			Core.screen.game["btn" + btnNum].text.text = label;
 			btnID[btnNum - 1] = eventID;
 		}
-		// New version of button for intepreter, alows seting a custom callback.
+		// New version of button for intepreter, allows setting a custom callback.
 		public function setButton(btnNum:int, label:String):void {
 			Core.screen.game["btn" + btnNum].visible = true;
 			Core.screen.game["btn" + btnNum].text.text = label;
@@ -89,13 +89,13 @@
 		//Go to Game screen
 		public function toGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			Core.event.testEngine(Core.event.eventID);
+			Core.interpreter.interpret("" + Interpreter.holdScene + "");
 			Core.screen.game.refreshUI();
-			trace("eventID = " +Core.event.eventID+"");
 		}
 		//Go to the Main menu
 		public function toMain(e:MouseEvent):void {
 			Core.screen.switchTo("MainMenu");
+			Core.interpreter.interpret("" + Interpreter.holdScene + "");
 		}
 		//Go to the Options menu
 		public function toOptions(e:MouseEvent):void {

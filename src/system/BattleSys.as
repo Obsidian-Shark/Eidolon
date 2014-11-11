@@ -21,6 +21,7 @@
 			//constructor code
 		}
 		
+		//Loads the called encounter
 		public static function loadEncounter(id:String):void {
 			//flushEncounterData();
 			Core.pc.loadCombat();
@@ -44,7 +45,7 @@
 			trace(turnOrder.length);
 		}
 		
-		// Returns an array containing all the membrs of a team which are active
+		// Returns an array containing all the members of a team which are active
 		public static function getActiveMembers(team) {
 			var activeMembers = [];
 			for (var i:int = 0; i < team.length; i += 1) {

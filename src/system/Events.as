@@ -12,14 +12,13 @@
 			//constructor code
 		}
 		//This is the menu for testing various aspects of the Eidolon engine
-		//Rewritten for new interperter system... no idea if this will actually work
 		public static function testMenu() {
 			return {
 				menu: {
 					text: [
-						"Welcome to the Eidolon Project, an Actionscript 3 focused tool to make constructing text adventure/RPGs games a bit easier. Feel free to test out any of Ediolon's programmed functions and get a feel for how it works on a visual level. \n",
+						"Welcome to the Eidolon Project, an Actionscript 3 focused tool to make constructing text adventure/RPGs games a bit easier. Feel free to test out any of Ediolon's programmed functions and get a feel for how it works on a visual level. \n\n",
 						"Please note that much of the interface has been built in Flash CC itself and not 'designed' with the AS3 coding itself... but you are welcome to adapt this project to fit whatever purposes you need it for. \n\n",
-						"*to test Combat, be sure to load a pre-set character profile... else it won't work... or at least, it shouldn't work.",
+						"*Currently, none of the options work currently.",
 					],
 					options: [
 						{
@@ -47,45 +46,65 @@
 				
 				preset: {
 					text: [
-						"Which profile would you like to load? \r\r",
-						"Caetus - a kind-hearted female Mer. Weak in strength but incredibly agile. \r",
-						"Baldr - a powerful, selfish Human. High strength and endurance with moderate dodging ability."
+						"Preset profile is currently unavailable."
 					],
 					options: [
 						{
-							text: "Caetus",
-							event: "loadCaetus"
+							text: "Return",
+							event: "menu"
 						},
-						{
-							text: "Baldr",
-							event: "loadBaldr"
-						}
 					]
 				},
 				
 				combat: {
 					text: [ 
+						"Combat demonstration is currently unavailable."
+					],
+					options: [
 						{
-							reqs: ["pc.str > 0"],
-							text: "\r\rTrigger Combat."
-						}
+							text: "Return",
+							event: "menu"
+						},
 					]
-					
 				},
+				
 				dungeon: {
-					
+					text: [
+						"Dungeon demonstration is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				},
 				roamArea: {
-					
+					text: [
+						"Free-roam demonstration is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				},
 				town : {
-					
-				},
-				loadCaetus : {
-					
+					text: [
+						"Lorem (text town) is currently unavailable."
+					],
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
 				}
 			}
 		}
+		//Old code format
+		//Kept for back-up purposes.
 		public function testEngine(id:Number):void {
 			Core.btn.flushBtns();
 			eventID = id;

@@ -16,9 +16,9 @@
 			return {
 				menu: {
 					text: [
-						"Welcome to the Eidolon Project, an Actionscript 3 focused tool to make constructing text adventure/RPGs games a bit easier. Feel free to test out any of Ediolon's programmed functions and get a feel for how it works on a visual level. \n",
+						"Welcome to the Eidolon Project, an Actionscript 3 focused tool to make constructing text adventure/RPGs games a bit easier. Feel free to test out any of Ediolon's programmed functions and get a feel for how it works on a visual level. \n\n",
 						"Please note that much of the interface has been built in Flash CC itself and not 'designed' with the AS3 coding itself... but you are welcome to adapt this project to fit whatever purposes you need it for. \n\n",
-						"*to test Combat, be sure to load a pre-set character profile... else it won't work... or at least, it shouldn't work.",
+						"*Currently, none of the options work currently.",
 					],
 					options: [
 						{
@@ -60,9 +60,6 @@
 					text: [ 
 						"Combat demonstration is currently unavailable."
 					],
-					regs: ["pc.str > 0"] {
-							fight: "Eidolon"
-						}
 					options: [
 						{
 							text: "Return",

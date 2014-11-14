@@ -39,20 +39,54 @@
 						},
 						{
 							text: "Town",
-							event: "town"
+							event: "lorem.explore"
 						}
 					]
 				},
 				
 				preset: {
 					text: [
-						"Preset profile is currently unavailable."
+						"Select a profile to load."
 					],
 					options: [
+						{
+							text: "Caetus",
+							event: "profileCaetus"
+						},
+						{
+							text: "Baldr",
+							event: "profileBaldr"
+						},
 						{
 							text: "Return",
 							event: "menu"
 						},
+					]
+				},
+				
+				profileCaetus: {
+					loadCharacter: "caetus",
+					text: [
+						"Loaded profile Caetus",
+					],
+					options: [
+						{
+							text: "back",
+							event: "preset"
+						}
+					]
+				},
+				
+				profileBaldr: {
+					loadCharacter: "baldr",
+					text: [
+						"Loaded profile Baldr",
+					],
+					options: [
+						{
+							text: "back",
+							event: "preset"
+						}
 					]
 				},
 				

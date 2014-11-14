@@ -1,29 +1,31 @@
 ﻿package system {
 	import scenes.*;
+	import lists.*;
 	import Core;
-	
+
 	public class Interpreter {
 
 		public function Interpreter() {
-			
+
 		}
-		
-		private var currentSource:String = undefined;
+
+		private var currentSource: String = undefined;
 		private var allData = {
 			lorem: Lorem.getData(),
 			test: Events.testMenu()
 		}
 		//Tracks 'current' loaded screen in the event the Player switches from the Game screen and back.
-		public static var holdScene:String = "";
-		
+		public static var holdScene: String = "";
+
 		//Core function to make this work.
 		//Routes sceneData to the appropriate function needed to run (I think?)
-		public function interpret(sceneName) {			
+		public function interpret(sceneName) {
 			var sceneData = getSceneData(sceneName);
 			if (sceneData) {
 				nextButtonNumber = 0;
 				displayText(sceneData);
 				runFlags(sceneData);
+				loadProfiles(sceneData);
 				displayOptions(sceneData);
 				runItems(sceneData);
 				pcStats(sceneData);
@@ -35,9 +37,22 @@
 			trace(sceneName);
 			trace(holdScene);
 		}
-		
-		public static var thisScene:String;
-		
+
+		private function loadProfiles(sceneData) {
+			var charName = sceneData.loadCharacter,
+				charData;
+			
+			if (charName)  {
+				charData = ProfileLibrary.getProfile(charName);
+				
+				for (var prop in charData) {
+					Core.pc[prop] = charData[prop];
+				}
+			}
+		}
+
+		public static var thisScene: String;
+
 		private function refresh() {
 			interpret(thisScene);
 		}
@@ -52,7 +67,7 @@
 			}
 		}
 		//Checks for the request criteria to trigger (or lock out) a part of a scene
-		private function reqsMet (requirments) {
+		private function reqsMet(requirments) {
 			if (requirments) {
 				// If there is only one requirment it might not be in an array
 				if (typeof requirments === "string") {
@@ -62,7 +77,7 @@
 				var split;
 				for (var i = 0; i < requirments.length; i += 1) {
 					split = requirments[i].split(".");
-					
+
 					if (split[0].substring(0, 1) !== "!") {
 						if (Core.flags[split[1]] === false || Core.flags[split[1]] === undefined) {
 							return false;
@@ -70,12 +85,11 @@
 						if (Core.pc[split[1]] === false || Core.pc[split[1]] === undefined) {
 							return false;
 						}
-					} 
-					else {
-						if (Core.flags[split[1]] === true ) {
+					} else {
+						if (Core.flags[split[1]] === true) {
 							return false;
 						}
-						if (Core.pc[split[1]] === true ) {
+						if (Core.pc[split[1]] === true) {
 							return false;
 						}
 					}
@@ -87,8 +101,8 @@
 		private function displayText(sceneData) {
 			var textData = sceneData.text;
 			Core.text.clearText();
-			for (var i:int = 0; i < textData.length; i += 1) {
-				if (typeof(textData[i]) === "string") {
+			for (var i: int = 0; i < textData.length; i += 1) {
+				if (typeof (textData[i]) === "string") {
 					Core.text.addText(Core.parser.parse(textData[i]));
 				} else {
 					if (reqsMet(textData[i].reqs)) {
@@ -97,13 +111,13 @@
 				}
 			}
 		}
-		
-		private var nextEvents:Array = [];
-		
+
+		private var nextEvents: Array = [];
+
 		private var nextButtonNumber = 0;
-		
+
 		//Handles generating a 'next' button to move on to the immediate next scene.
-		private function nextButton (text, callback) {
+		private function nextButton(text, callback) {
 			Core.btn.setButtonEvent(nextButtonNumber, callback);
 			Core.btn.setButton(nextButtonNumber + 1, text);
 			nextButtonNumber += 1;
@@ -112,15 +126,15 @@
 		private function displayOptions(sceneData) {
 			var optionData = sceneData.options;
 			Core.btn.flushBtns();
-			for (var i:int = 0; i < optionData.length; i += 1) {
+			for (var i: int = 0; i < optionData.length; i += 1) {
 				if (reqsMet(optionData[i].reqs)) {
 					nextButton(optionData[i].text, navigationEventFactory(optionData[i].event));
 				}
 			}
 		}
-		
-		private function navigationEventFactory(event):Function {
-			return function(btnNumber):void {
+
+		private function navigationEventFactory(event): Function {
+			return function (btnNumber): void {
 				interpret(event);
 			}
 		}
@@ -128,7 +142,7 @@
 		private function runCombat(sceneData) {
 			var encountData = sceneData.fight;
 			if (encountData) {
-				for (var i:int = 0; i < encountData.length; i += 1) {
+				for (var i: int = 0; i < encountData.length; i += 1) {
 					BattleSys.loadEncounter(encountData);
 				}
 			}
@@ -137,7 +151,7 @@
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
 			if (flagData) {
-				for (var i:int = 0; i < flagData.length; i += 1) {
+				for (var i: int = 0; i < flagData.length; i += 1) {
 					Core.flags[flagData[i].flag] = flagData[i].newValue;
 				}
 			}
@@ -146,8 +160,8 @@
 		private function pcStats(sceneData) {
 			var pcData = sceneData.pc;
 			if (pcData) {
-				for (var i:int = 0; i < pcData.length; i += 1) {
-					Core.pc[pcData[i].pc] =  pcData[i].newValue;
+				for (var i: int = 0; i < pcData.length; i += 1) {
+					Core.pc[pcData[i].pc] = pcData[i].newValue;
 				}
 			}
 		}
@@ -155,7 +169,7 @@
 		private function runItems(sceneData) {
 			var itemsData = sceneData.items;
 			if (itemsData) {
-				for (var i:int = 0; i < itemsData.length; i += 1) {
+				for (var i: int = 0; i < itemsData.length; i += 1) {
 					if (reqsMet(itemsData[i].reqs) && !Core.flags[currentSource + "_Looted_" + itemsData[i].item]) {
 						nextButton(itemsData[i].text, itemEventFactory(itemsData[i]));
 					}
@@ -163,22 +177,22 @@
 			}
 		}
 		//Loots item and adds to Player's inventory
-		private function itemEventFactory (itemData):Function {
-			return function(btnNumber):void {
+		private function itemEventFactory(itemData): Function {
+			return function (btnNumber): void {
 				// Set a flag to remeber the item was looted... this needs to be modified from flags to int
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
-				
+
 				// Here is where we would actually add the item to the player but items... need to implement this properly
-				
+
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {
 					Core.text.addText(itemData.pickupText)
 				}
-				
+
 				// Hide the pickup button
 				Core.btn.hideButton(btnNumber)
 			}
 		}
 	}
-	
+
 }

@@ -11,7 +11,7 @@
 		public var name:String = "";
 		public var slot:String = ""; //Equipment slot
 		public var stack:int = 0; //Amount of item carried
-		public var type:String = ""; //Weapon = spear, sword, sheild, etc. | Potion = restore, TF, etc
+		public var type:String = ""; //Weapon = spear, sword, sheild, etc. | Potion = health, TF, etc
 		public var value:int = 0; //Worth x amount of sigils
 		//Weapon variables
 		public var dmgMod:Number = 0; //Damage calculation

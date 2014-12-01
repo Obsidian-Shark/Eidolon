@@ -15,11 +15,11 @@
 			return {
 				explore: {
 					text: [
-						"This is some test data for the parser. The player's name is [pc.name] and here is the result of invoking a decription function [pc.mpDesc] \n\n",
+						"This is some test data for the parser. The player's name is [pc.name] and here is the result of invoking a decription function [pc.mpDesc] \n",
 						"System designed by Void Director",
 						"\r\rYou stand in the town of Lorem, a small, quaint trading town.",
 						"\r\rThere is a store with dusty windows with its door, invitingly, open. You can see stock shelves of various items inside.",
-						"\r\rhere is a small tavern to your right that looks pretty quiet but you can see people inside through the windows."
+						"\r\rThere is a small tavern to your right that looks pretty quiet but you can see people inside through the windows."
 					],
 					options: [
 						{

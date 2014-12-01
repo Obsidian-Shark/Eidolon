@@ -37,7 +37,7 @@
 			trace(sceneName);
 			trace(holdScene);
 		}
-
+		//Loads pre-set character profiles
 		private function loadProfiles(sceneData) {
 			var charName = sceneData.loadCharacter,
 				charData;
@@ -49,6 +49,7 @@
 					Core.pc[prop] = charData[prop];
 				}
 			}
+			Core.screen.game.refreshUI();
 		}
 
 		public static var thisScene: String;

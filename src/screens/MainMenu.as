@@ -34,7 +34,7 @@
 			gameNew.text.text = "New Game";
 			gameResume.text.text = "Resume";
 			options.text.text = "Options";
-			version.text = "Version 01.00.00";
+			version.text = "Version 01.07.00";
 			//Set eventlisteners to the buttons on screen
 			credits.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toCredits);
 			gameNew.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.newGame);

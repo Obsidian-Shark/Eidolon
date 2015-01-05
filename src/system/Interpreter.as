@@ -23,13 +23,13 @@
 			var sceneData = getSceneData(sceneName);
 			if (sceneData) {
 				nextButtonNumber = 0;
-				displayText(sceneData);
-				runFlags(sceneData);
-				loadProfiles(sceneData);
 				displayOptions(sceneData);
-				runItems(sceneData);
+				displayText(sceneData);
+				loadProfiles(sceneData);
 				pcStats(sceneData);
 				runCombat(sceneData);
+				runFlags(sceneData);
+				runItems(sceneData);
 			} else {
 				Core.text.addText("No data for scene " + sceneName);
 			}
@@ -180,10 +180,14 @@
 		//Loots item and adds to Player's inventory
 		private function itemEventFactory(itemData): Function {
 			return function (btnNumber): void {
-				// Set a flag to remeber the item was looted... this needs to be modified from flags to int
+				// Set a flag to remember the item was looted...
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 
-				// Here is where we would actually add the item to the player but items... need to implement this properly
+				// Here is where we would actually add the item to the Player bag array... need to implement this properly
+				// Checks to see if the object looted already exists in array. If so, increase the 'count' variable in object instead, else just adds the item to the array
+				for (var i: int = 0; i < Core.pc.bag.length; i ++) {
+					if
+				}
 
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {

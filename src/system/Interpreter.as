@@ -186,7 +186,17 @@
 				// Here is where we would actually add the item to the Player bag array... need to implement this properly
 				// Checks to see if the object looted already exists in array. If so, increase the 'count' variable in object instead, else just adds the item to the array
 				for (var i: int = 0; i < Core.pc.bag.length; i ++) {
-					if
+					if (Core.pc.bag.hasOwnProperty(itemData.name)) {
+						if (Core.pc.bag[itemData.name].count) {
+							Core.pc.bag[itemData.name].count ++;
+						}
+						else {
+							Core.pc.bag[itemData.name].count += 0;
+						}
+					}
+					else {
+						Core.pc.bag[itemData.name] = itemData;
+					}
 				}
 
 				// Display some text describing picking up the item if it exists

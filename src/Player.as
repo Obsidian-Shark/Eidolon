@@ -1,5 +1,4 @@
 ﻿package {
-	import flash.display.GraphicsPathWinding;
 	import system.*;
 	import lists.*;
 	

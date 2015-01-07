@@ -168,7 +168,7 @@
 		}
 		//Checks for item before looting them
 		private function runItems(sceneData) {
-			var itemsData = sceneData.items;
+			var itemsData = sceneData.loot;
 			if (itemsData) {
 				for (var i: int = 0; i < itemsData.length; i += 1) {
 					if (reqsMet(itemsData[i].reqs) && !Core.flags[currentSource + "_Looted_" + itemsData[i].item]) {
@@ -184,21 +184,8 @@
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 
 				// Here is where we would actually add the item to the Player bag array... need to implement this properly
-				// Checks to see if the object looted already exists in array. If so, increase the 'count' variable in object instead, else just adds the item to the array
-				for (var i: int = 0; i < Core.pc.bag.length; i ++) {
-					if (Core.pc.bag.hasOwnProperty(itemData.name)) {
-						if (Core.pc.bag[itemData.name].count) {
-							Core.pc.bag[itemData.name].count ++;
-						}
-						else {
-							Core.pc.bag[itemData.name].count += 0;
-						}
-					}
-					else {
-						Core.pc.bag[itemData.name] = itemData;
-					}
-				}
-
+				Core.pc.loot(itemData.item);
+				
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {
 					Core.text.addText(itemData.pickupText)

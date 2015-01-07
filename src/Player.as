@@ -49,7 +49,7 @@
 		public var weapon1Slot:Object = { };
 		public var weapon2Slot:Object = { };
 		//Inventory
-		public var bag:Array = [ ];
+		public var bag:Object = { };
 		public var sigils:int = 0;
 		
 		public function Player() {

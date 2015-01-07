@@ -15,6 +15,7 @@
 		//Sets up all the proper shit for the window to work
 		private function initialize(e:Event):void {
 			close.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.closePopScrn);
+			//slot1.addEventListener(MouseEvent.MOUSE_DOWN, );
 		}
 	}
 	

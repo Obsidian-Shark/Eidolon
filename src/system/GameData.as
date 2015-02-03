@@ -10,7 +10,7 @@ package system {
 	 import flash.net.SharedObject;
 	 import flash.utils.describeType;
 	 
-	 import dracnois.scenes.*;
+	 import scenes.*;
 	
 	public class GameData {
 		
@@ -27,8 +27,7 @@ package system {
 			for each(var item:XML in variables) {
 				to[storeName] [item.attribute("name")] = from[item.attribute("name")];
 			}
-		}
-		
+		}		
 		//Builds or over-writes existing save data
 		public static function saveData(slot:String):Boolean {
 			var saveFile = SharedObject.getLocal(slot);
@@ -36,7 +35,7 @@ package system {
 			//Save Player variables
 			addStaticObject("player", saveFile.data, Core.pc);
 			if (saveFile.flush()) return true;
-			return flase;
+			return false;
 		}
 		
 		//Loads data from a save file
@@ -52,7 +51,7 @@ package system {
 		}
 		
 		//Loads stored data into game engine
-		private function loadStaticObject(storeName:String, to:Object, from:Object): void {
+		public static function loadStaticObject(storeName:String, to:Object, from:Object): void {
 			trace(from[storeName]);
 			for (var prop:String in from [storeName]) {
 				to[prop] = from[storeName][prop];

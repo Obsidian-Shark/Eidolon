@@ -79,7 +79,7 @@
 		//Start a new game... be sure to flush previous data to avoid errors (data flush should be a separate function or however you know how to do it)
 		public function newGame(e:MouseEvent):void {
 			Core.screen.switchTo("Game");
-			//Core.event.testEngine(001);
+			Core.event.testEngine(001);
 			Core.interpreter.interpret("test.menu");
 		}
 		//Go to the Credits menu
@@ -119,7 +119,9 @@
 		}
 		//Save to file slot 1
 		public function slot1Save(e:MouseEvent):void {
-			
+			GameData.saveData("one");
+			Core.screen.data.displaySlotInfo("one");
+			trace("Game saved to Slot 1");
 		}
 		//Select a target if there are multiple enemies
 		public function pickTarget(e:MouseEvent):void {

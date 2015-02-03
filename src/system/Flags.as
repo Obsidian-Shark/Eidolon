@@ -4,6 +4,7 @@
 	 * ...
 	 * @author Obsidian Shark
 	 */
+	
 	public class Flags	{
 		//ALL flag variables should be stored here... except anything related to achievements
 		public var companionAI:Boolean = true; //True = Companions controlled by AI; False = Companions controlled by Player (combat only)

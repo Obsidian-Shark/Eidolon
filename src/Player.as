@@ -80,8 +80,8 @@
 			pc.legArmr = legSlot;
 		}
 		//Player loots item
-		public function loot(item:Object, num:Number):void {
-			item.count = num;
+		public function loot(item:Object):void {
+			//item.count = num;
 			if (bag.hasOwnProperty(item.name)) {
 				if (bag[item.name].count) {
 					bag[item.name].count ++;

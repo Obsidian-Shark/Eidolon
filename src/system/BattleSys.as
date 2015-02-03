@@ -33,7 +33,6 @@
 				break;
 			}
 			id = "";
-			Core.screen.combat.startFight();
 			setTurns();
 		}
 		//Pushes entity objects into turn array if there is data in them

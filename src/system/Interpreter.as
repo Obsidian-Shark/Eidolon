@@ -147,6 +147,7 @@
 					BattleSys.loadEncounter(encountData);
 				}
 			}
+			Core.screen.combat.startFight();
 		}
 		//Check flags... I think?
 		private function runFlags(sceneData) {

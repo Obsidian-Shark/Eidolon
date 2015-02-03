@@ -34,32 +34,24 @@
 
 
 		private static var profiles = {
-			caetus: {
-				name: "Caetus",
-				gender: "Female",
-				level: 99,
-				str: 62,
-				endr: 30,
-				dex: 75,
-				agi: 130,
-				wis: 50,
-				chrs: 999,
+			male: {
+				gender: "Male",
+				level: 1,
+				str: 12,
+				endr: 12,
+				dex: 10,
+				agi: 10,
+				wis: 10,
+				chrs: 10,
 				//Personality
-				aggression: 25,
-				discipline: 65,
-				dominate: 50,
+				aggression: 10,
+				discipline: 50,
 				honesty: 50,
-				submissive: 50,
-				trust: 30,
-				vile: 10,
-				virtuous: 70,
+				will: 50,
 				//Arm this bitch
-				weapon1Slot: ItemLibrary.LevthFang,
-				weapon2Slot: ItemLibrary.Fist,
-				chestSlot: ItemLibrary.LagiasKntChst,
-				feetSlot: ItemLibrary.LagiasKntGrv,
-				handSlot: ItemLibrary.LagiasKntGlv,
-				legSlot: ItemLibrary.LagiasKntLgs
+				weapon1Slot: ItemLibrary.Fist,
+				weapon2Slot: ItemLibrary.Fist
+				//Setup Body Slots
 			},
 
 			baldr: {

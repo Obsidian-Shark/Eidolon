@@ -94,6 +94,11 @@
 					text: [ 
 						"Combat demonstration is currently unavailable."
 					],
+					fight: {
+						enemies: ["Eidolon"],
+						win: "menu",
+						lose: "profileBaldr"
+					},
 					options: [
 						{
 							text: "Return",

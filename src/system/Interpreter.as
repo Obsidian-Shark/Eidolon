@@ -150,11 +150,14 @@
 		//Run combat... still needs extensive work to funciton correctly
 		private function runCombat(sceneData) {
 			var encounterData = sceneData.fight;
+			
 			if (encounterData) {
-				for (var i: int = 0; i < encounterData.length; i += 1) {
-					BattleSys.loadEncounter(encounterData);
+				var combat = Core.screen.switchTo("Combat");
+				for (var i: int = 0; i < encounterData.enemies.length; i += 1) {
+					BattleSys.loadEncounter(encounterData.enemies[i]);
 				}
-				Core.screen.combat.startFight();
+				combat.startFight();
+				trace('endvl')
 			}
 		}
 		

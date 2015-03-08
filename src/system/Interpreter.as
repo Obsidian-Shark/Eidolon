@@ -103,9 +103,22 @@
 			return true;
 		}
 		
+		// Checks if a variable is an array
+		private function isArray(item):Boolean {
+			return typeof item === "object" && item.constructor === Array;
+		}
+		
+		// Takes a variable and wraps it in an array (of one element) if it is not already an array
+		private function boxArray(item):Array {
+			if (isArray(item)) {
+				return item;
+			}  
+			return [item];
+		}
+		
 		//Handles parsing and displaying text in the game window properly
 		private function displayText(sceneData) {
-			var textData = sceneData.text;
+			var textData = boxArray(sceneData.text || "");
 			Core.text.clearText();
 			for (var i: int = 0; i < textData.length; i += 1) {
 				if (typeof (textData[i]) === "string") {
@@ -152,12 +165,15 @@
 			var encounterData = sceneData.fight;
 			
 			if (encounterData) {
-				var combat = Core.screen.switchTo("Combat");
-				for (var i: int = 0; i < encounterData.enemies.length; i += 1) {
-					BattleSys.loadEncounter(encounterData.enemies[i]);
-				}
+				var combat = Core.screen.switchTo("Combat"),
+					intepreter = this;
+				BattleSys.loadEncounter(encounterData.enemies);
+				BattleSys.setEnd(function () {
+					intepreter.interpret(encounterData.win);
+				}, function () {
+					intepreter.interpret(encounterData.loss);
+				});
 				combat.startFight();
-				trace('endvl')
 			}
 		}
 		

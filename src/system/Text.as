@@ -32,7 +32,7 @@
 			Core.screen.game.scrollBar1.update();
 		}
 		//Text display for combat
-		public function fightText(text:String, reset:Boolean):void {
+		public function fightText(text:String, reset:Boolean = false):void {
 			if (reset == false) outputText = outputText + text;
 			else outputText = text;
 			Core.screen.combat.text.htmlText = outputText;

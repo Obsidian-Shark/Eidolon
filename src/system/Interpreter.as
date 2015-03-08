@@ -103,9 +103,22 @@
 			return true;
 		}
 		
+		// Checks if a variable is an array
+		private function isArray(item):Boolean {
+			return typeof item === "object" && item.constructor === Array;
+		}
+		
+		// Takes a variable and wraps it in an array (of one element) if it is not already an array
+		private function boxArray(item):Array {
+			if (isArray(item)) {
+				return item;
+			}  
+			return [item];
+		}
+		
 		//Handles parsing and displaying text in the game window properly
 		private function displayText(sceneData) {
-			var textData = sceneData.text;
+			var textData = boxArray(sceneData.text || "");
 			Core.text.clearText();
 			for (var i: int = 0; i < textData.length; i += 1) {
 				if (typeof (textData[i]) === "string") {
@@ -150,11 +163,17 @@
 		//Run combat... still needs extensive work to funciton correctly
 		private function runCombat(sceneData) {
 			var encounterData = sceneData.fight;
+			
 			if (encounterData) {
-				for (var i: int = 0; i < encounterData.length; i += 1) {
-					BattleSys.loadEncounter(encounterData);
-				}
-				Core.screen.combat.startFight();
+				var combat = Core.screen.switchTo("Combat"),
+					intepreter = this;
+				BattleSys.loadEncounter(encounterData.enemies);
+				BattleSys.setEnd(function () {
+					intepreter.interpret(encounterData.win);
+				}, function () {
+					intepreter.interpret(encounterData.loss);
+				});
+				combat.startFight();
 			}
 		}
 		

@@ -49,8 +49,8 @@
 				honesty: 50,
 				will: 50,
 				//Arm this bitch
-				weapon1Slot: ItemLibrary.Fist,
-				weapon2Slot: ItemLibrary.Fist
+				weapon1: ItemLibrary.Fist,
+				weapon2: ItemLibrary.Fist
 				//Setup Body Slots
 			},
 
@@ -64,6 +64,9 @@
 				agi: 40,
 				wis: 37,
 				chrs: 999,
+				// Weapons
+				weapon1: ItemLibrary.Fist,
+				weapon2: ItemLibrary.Fist,
 				//Personality
 				aggression: 25,
 				discipline: 65,

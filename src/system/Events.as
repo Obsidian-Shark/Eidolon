@@ -91,9 +91,32 @@
 				},
 				
 				combat: {
-					text: [ 
-						"Combat demonstration is currently unavailable."
-					],
+					text: "Combat demonstration is currently unavailable.",
+					fight: {
+						enemies: ["Eidolon"],
+						win: "combatWin",
+						loss: "combatLose"
+					},
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
+				},
+				
+				combatWin: {
+					text: "You won. Cool!",
+					options: [
+						{
+							text: "Return",
+							event: "menu"
+						},
+					]
+				},
+				
+				combatLose: {
+					text: "You lost. Too bad.",
 					options: [
 						{
 							text: "Return",
@@ -166,7 +189,7 @@
 				else {
 					eventID = 001;
 					Core.screen.switchTo("Combat");
-					BattleSys.loadEncounter("Eidolon");
+					BattleSys.loadEncounter(["Eidolon"]);
 				}
 			}
 			if (id == 004) {

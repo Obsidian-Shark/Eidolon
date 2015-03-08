@@ -11,6 +11,7 @@
 
 	dynamic public class Entity {
 	public var active:Boolean = false;
+	private var defeated:Boolean = false;
 	public var lvl:Number
 	public var name:String = "";
 	public var maxHP:Number = 0;
@@ -30,7 +31,7 @@
 	public var abilityTxt:String = "";
 	public var attackTxt:String = "{0} attacks {1}!";
 	public var blockTxt:String = "{0} blocks {1}'s attack, nullifying any potential damage.";
-	public var defeatTxt:String = "{0} defeats {1}!.";
+	public var defeatTxt:String = "{0} was defeated!.";
 	public var dodgeTxt:String = "{0} dodges {1}'s attack!";
 	public var dmgTxt:String = "{0} takes {1} points of damage.";
 	public var parryTxt:String = "{0} parries {1}'s attack, taking no damage.";
@@ -42,11 +43,30 @@
 	public var feetArmr:Object = { };
 	public var handArmr:Object = { };
 	public var legArmr:Object = { };
-
-	public function Entity()
+	
+	// Builds an entity from an object containing that entities data
+	// If given no arguments will build a blank entity instead
+	public function Entity(data:Object = undefined)
 	{
-		//constructor code
+		if (!data) 
+			return;
+		
+		for (var prop in data) {
+			this[prop] = data[prop]
+		}
+				
+		maxHP = Math.round(((endr || 1) * 10.5)*1);
+		maxMP = Math.round(((wis  || 1) * 10.5)*1);
+		maxSP = Math.round(((endr || 1) + str * 2.5)*1);
+		HP = maxHP;
+		MP = maxMP;
+		SP = maxSP;
+		
+		if (active !== false) 
+			active = true;
+		trace('New Entity', JSON.stringify(this));
 	}
+	
 	//Runs Entity's turn
 	public function runTurn():void
 	{
@@ -72,56 +92,81 @@
 		trace("" + targets);
 		trace(targets[0].name);
 	}
+	
 	//AI uses this function for attacking;
 	public function autoAttack(target:Entity):void
 	{
-		var parsedString = StringUtil.substitute(this.attackTxt, this.name, target.name);
-		Core.text.fightText("\r"+parsedString+"\r", false);
-		dodgeCheck(target);
+		this.attack(target);
 		trace("" + this.name + " attacks!");
 	}
+	
 	//Used by Player for attacking
 	public function manualAttack(target:Entity):void
 	{
-		var parsedString = StringUtil.substitute(this.attackTxt, this.name, target.name);
-		Core.text.fightText(""+parsedString+"\r", true);
-		dodgeCheck(target);
+		Core.text.fightText("", true); // Clear previous text, placeholder for a better way to do this
+		this.attack(target);
 		BattleSys.runAllTurns();
 	}
+
+	public function attack(target:Entity):void 
+	{
+		Core.text.fightText(StringUtil.substitute(this.attackTxt, this.name, target.name) + "\r");
+		if (dodgeCheck(target)) {
+			trace('wepon', weapon1.dmgMod, weapon2.dmgMod);
+			dealDamage(this.str * ((weapon1.dmgMod || 1) + (weapon2.dmgMod || 1)), target);
+		}
+	}
+	
 	//Dodge check
-	public function dodgeCheck(target:Entity):void {
+	public function dodgeCheck(target:Entity):Boolean {
 		if (Math.random() < (this.agi / target.dex)) {
-			dealDamage(target);
 			trace("" + target.name + " is hit!");
+			return true;
 		}
 		else {
-			var parsedString = StringUtil.substitute(this.dodgeTxt, target.name, this.name);
-			Core.text.fightText(parsedString, false);
+			Core.text.fightText(StringUtil.substitute(this.dodgeTxt, target.name, this.name));
 			trace("" + target.name + " dodged the attack");
+			return false;
 		}
 	}
-	//Deal damage...duh
-	public function dealDamage(target:Entity):void
+	
+	//Deal damage to another entity
+	// Any abilities that were to modify the amount of damage dealt on the users side would run here
+	public function dealDamage(amount:int, target:Entity):void
 	{
-		var dmg:int = this.str * (weapon1.dmgMod + weapon2.dmgMod);
-		//Calculate target's damage absorption based on the armor they have equipped
-		target.HP -= dmg;
-		var parsedString = StringUtil.substitute(this.dmgTxt, target.name, dmg);
-		Core.text.fightText(""+parsedString+"\r", false);
-		if (target.HP <= 0)
-		{
-			target.HP = 0;
-			var parsedString2 = StringUtil.substitute(target.defeatTxt, this.name, target.name);
-			Core.text.fightText("" + parsedString2 + "\r", false);
-			BattleSys.endCombat();
-		}
+		var damageRecived = target.takeDamage(amount, this);
+		trace("" +target.name + " takes " + amount + " points of damage");
+	}
+	
+	// Recive damage from another entity
+	// Eventually this will deal with damage reduction, counter attacks, ect.
+	private function takeDamage(amount:int, dealer:Entity):int {
+		var oldHP = this.HP;
+		this.HP = Math.max(this.HP - amount, 0); // You can't take more damage than you have life
 		Core.screen.combat.refreshDisplays();
-		trace("" +target.name + " takes " + dmg + " points of damage");
+		var diff = oldHP - this.HP; // store how much damage the attacker actually did
+		Core.text.fightText(StringUtil.substitute(this.dmgTxt, this.name, diff) + "\r");
+		this.checkDefeated();
+		return diff;
 	}
+	
+	// Checks if this entity was defeated by damage. If so sets a defeated boolean
+	private function checkDefeated():Boolean {
+		if (this.HP <= 0)
+		{
+			Core.text.fightText(StringUtil.substitute(this.defeatTxt, this.name) + "\r");
+			this.active = false;
+			BattleSys.checkEnd();
+			return true;
+		}
+		return false;
+	};
+	
+	
 	//Healing... though there's no spell system right now.
-	private function heal(target:Entity):void
+	private function healDamage(amount:int, healer:Entity):void
 	{
-
+		this.HP = Math.min(this.HP + amount, this.maxHP);
 	}
 
 }

@@ -27,7 +27,6 @@
 				displayText(sceneData);
 				loadProfiles(sceneData);
 				pcStats(sceneData);
-				runCombat(sceneData);
 				runFlags(sceneData);
 				runItems(sceneData);
 			} else {
@@ -139,16 +138,6 @@
 				interpret(event);
 			}
 		}
-		//Run combat... still needs extensive work to funciton correctly
-		private function runCombat(sceneData) {
-			var encountData = sceneData.fight;
-			if (encountData) {
-				for (var i: int = 0; i < encountData.length; i += 1) {
-					BattleSys.loadEncounter(encountData);
-				}
-			}
-			Core.screen.combat.startFight();
-		}
 		//Check flags... I think?
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
@@ -185,7 +174,7 @@
 				Core.flags[currentSource + "_Looted_" + itemData.item] = true;
 
 				// Here is where we would actually add the item to the Player bag array... need to implement this properly
-				Core.pc.loot(itemData.item);
+				Core.pc.loot(itemData);
 				
 				// Display some text describing picking up the item if it exists
 				if (itemData.pickupText) {

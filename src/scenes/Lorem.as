@@ -38,19 +38,10 @@
 						"You walk inside the shop and are warmly greeted by the shopkeeper at the corner. There are several shelves neatly lined to make aisles, each neatly organized and clearly categorized.",
 						"\rThere are numerous items of interest available here.",
 					],
-					options: [
+					loot: [
 						{
-							text: "Potion",
-							event: "potion"
-						},
-						{
-							text: "Trinket",
-							event: "trinket"
-						},
-						{
-							text: "Leave",
-							event: "explore"
-						},
+							text: "Potion"
+						}
 					]
 				},
 				

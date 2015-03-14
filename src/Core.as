@@ -16,11 +16,9 @@
 	 * various online tutorials of varying sources
 	 */
 	
-	//EIDOLON Version 1.07
+	//EIDOLON Version 1.08
 	/*UPDATE & FIXES CHANGELOG
-	 * Switching between screens with an active game has a scene tracking issue. Resolving soon.
-	 * Need to re-add loading preset Player profiles
-	 * Work on adding & removing items from Player inventory as well as use of currency.
+	 * Trying to get inventory working
 	 * 
 	*/
 	

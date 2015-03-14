@@ -14,6 +14,7 @@
 			lorem: Lorem.getData(),
 			test: Events.testMenu()
 		}
+		
 		//Tracks 'current' loaded screen in the event the Player switches from the Game screen and back.
 		public static var holdScene: String = "";
 
@@ -36,6 +37,7 @@
 			trace(sceneName);
 			trace(holdScene);
 		}
+		
 		//Loads pre-set character profiles
 		private function loadProfiles(sceneData) {
 			var charName = sceneData.loadCharacter,
@@ -56,6 +58,7 @@
 		private function refresh() {
 			interpret(thisScene);
 		}
+
 		//Works in tadem with interpret() to translate data into the correct functions
 		private function getSceneData(sceneName) {
 			if (sceneName.indexOf(".") >= 0) {
@@ -66,6 +69,7 @@
 				return allData[currentSource][sceneName];
 			}
 		}
+		
 		//Checks for the request criteria to trigger (or lock out) a part of a scene
 		private function reqsMet(requirments) {
 			if (requirments) {
@@ -97,9 +101,23 @@
 			}
 			return true;
 		}
+		
+		// Checks if a variable is an array
+		private function isArray(item):Boolean {
+			return typeof item === "object" && item.constructor === Array;
+		}
+		
+		// Takes a variable and wraps it in an array (of one element) if it is not already an array
+		private function boxArray(item):Array {
+			if (isArray(item)) {
+				return item;
+			}  
+			return [item];
+		}
+		
 		//Handles parsing and displaying text in the game window properly
 		private function displayText(sceneData) {
-			var textData = sceneData.text;
+			var textData = boxArray(sceneData.text || "");
 			Core.text.clearText();
 			for (var i: int = 0; i < textData.length; i += 1) {
 				if (typeof (textData[i]) === "string") {
@@ -116,12 +134,13 @@
 
 		private var nextButtonNumber = 0;
 
-		//Handles generating a 'next' button to move on to the immediate next scene.
+		// Sets the next unused button on the UI to have the given text and callback
 		private function nextButton(text, callback) {
 			Core.btn.setButtonEvent(nextButtonNumber, callback);
 			Core.btn.setButton(nextButtonNumber + 1, text);
 			nextButtonNumber += 1;
 		}
+		
 		//Enables multi-option buttons... basically, multiple choice during scenes.
 		private function displayOptions(sceneData) {
 			var optionData = sceneData.options;
@@ -133,12 +152,35 @@
 			}
 		}
 
+		// Returns a navigation callback (an anonymous function used to navigate to another scene)
 		private function navigationEventFactory(event): Function {
 			return function (btnNumber): void {
 				interpret(event);
 			}
 		}
+<<<<<<< HEAD
 		//Check flags... I think?
+=======
+		
+		//Run combat... still needs extensive work to funciton correctly
+		private function runCombat(sceneData) {
+			var encounterData = sceneData.fight;
+			
+			if (encounterData) {
+				var combat = Core.screen.switchTo("Combat"),
+					intepreter = this;
+				BattleSys.loadEncounter(encounterData.enemies);
+				BattleSys.setEnd(function () {
+					intepreter.interpret(encounterData.win);
+				}, function () {
+					intepreter.interpret(encounterData.loss);
+				});
+				combat.startFight();
+			}
+		}
+		
+		// Sets the value of any flags in scene data to new values also specified in the data
+>>>>>>> origin/master
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
 			if (flagData) {
@@ -147,6 +189,7 @@
 				}
 			}
 		}
+		
 		//Check Player's stats.
 		private function pcStats(sceneData) {
 			var pcData = sceneData.pc;
@@ -156,6 +199,7 @@
 				}
 			}
 		}
+		
 		//Checks for item before looting them
 		private function runItems(sceneData) {
 			var itemsData = sceneData.loot;
@@ -186,5 +230,4 @@
 			}
 		}
 	}
-
 }

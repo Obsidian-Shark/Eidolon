@@ -30,10 +30,9 @@
 			
 		}
 		//Switches to the called screen
-		public function switchTo(screenID:String): void {
+		public function switchTo(screenID:String): Object {
 			currScreen = screenID;
-			switchScreens();
-			trace("Screen switched");
+			return switchScreens();
 		}
 		//Loads the called pop-up screen
 		public function toPopScreen(screenID:String):void {
@@ -43,9 +42,9 @@
 		}
 		//Bridge between the command function and the screen switch list (excluding pop-up screens)
 		//also triggers the function to delete the current screen from the display list
-		private function switchScreens(): void {
+		private function switchScreens(): Object {
 			flushOldScreen();
-			loadScreen();
+			return loadScreen();
 		}
 		//Bridge between command function and the pop screen switch list
 		private function loadPopScreen():void {
@@ -77,38 +76,34 @@
 			popScreen = "";
 		}
 		//Switch list for normal game screens
-		private function loadScreen(): void {
+		private function loadScreen(): Object {
+			var nextScreen;
 			switch(currScreen) {
 				case "Combat":
-					combat = new Combat();
-					screenLayer.addChild(combat);
+					nextScreen = combat = new Combat();
 				break;
 				case "Credits":
-					credit = new Credits();
-					screenLayer.addChild(credit);
+					nextScreen = credit = new Credits();
 				break;
 				case "Game":
-					game = new Game();
-					screenLayer.addChild(game);
+					nextScreen = game = new Game();
 				break;
 				case "MainMenu":
-					main = new MainMenu();
-					screenLayer.addChild(main);
+					nextScreen = main = new MainMenu();
 				break;
 				case "Options":
-					option = new Options();
-					screenLayer.addChild(option);
+					nextScreen = option = new Options();
 				break;
 				case "Profile":
-					profile = new Profile();
-					screenLayer.addChild(profile);
+					nextScreen = profile = new Profile();
 				break;
 				default:
-					main = new MainMenu();
-					screenLayer.addChild(main);
+					nextScreen = main = new MainMenu();
 				break;
 			}
+			screenLayer.addChild(nextScreen);
 			currScreen = "";
+			return nextScreen;
 		}
 	}
 	

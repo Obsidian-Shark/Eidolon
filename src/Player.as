@@ -1,6 +1,7 @@
 ﻿package {
 	import system.*;
 	import lists.*;
+	import templates.Entity;
 	
 	/**
 	 * ...
@@ -9,25 +10,10 @@
 	 * @author Pako
 	 */
 	
-	dynamic public class Player {
+	dynamic public class Player extends Entity {
 		//Base Stats
-		public var name:String = "";
-		public var level:int = 0;
 		public var exp:int = 0;
 		public var gender:String = "";
-		//Combat stats
-		public var str:int = 0; //Strength
-		public var endr:int = 0; //Endurance
-		public var dex:int = 0; //Dexterity
-		public var agi:int = 0; //Agility
-		public var wis:int = 0; //Wisdom
-		public var chrs:int = 0; //Charisma
-		public var HP:int = 0;
-		public var maxHP:int = 0;
-		public var MP:int = 0;
-		public var maxMP:int = 0;
-		public var SP:int = 0;
-		public var maxSP:int = 0;
 		//Personality stats
 		public var aggression:int = 0; //Violent response
 		public var discipline:int = 0; //Impulse control
@@ -54,30 +40,12 @@
 		
 		public function Player() {
 			// constructor code
-			
 		}
+		
 		//Plug in data for combat
 		public function loadCombat():void {
-			var pc = BattleSys.playerTeam[0];
-			pc.active = true;
-			pc.name = name;
-			pc.str = str;
-			pc.endr = endr;
-			pc.agi = agi;
-			pc.dex = dex;
-			pc.wis = wis;
-			pc.maxHP = maxHP;
-			pc.maxMP = maxMP;
-			pc.maxSP = maxSP;
-			pc.HP = HP;
-			pc.MP = MP;
-			pc.SP = SP;
-			pc.weapon1 = weapon1Slot;
-			pc.weapon2 = weapon2Slot;
-			pc.chestArmr = chestSlot;
-			pc.feetArmr = feetSlot;
-			pc.handArmr = handSlot;
-			pc.legArmr = legSlot;
+			this.active = true;
+			BattleSys.playerTeam[0] = this;
 		}
 		//Player loots item
 		public function loot(item:Object):void {

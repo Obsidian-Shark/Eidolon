@@ -22,9 +22,13 @@
 		}
 		
 		//Loads the called encounter
-		public static function loadEncounter(id:String):void {
+		public static function loadEncounter(enemies:Array):void {
 			//flushEncounterData();
 			Core.pc.loadCombat();
+			for (var i = 0; i < enemies.length; i += 1) {
+				enemyTeam[i] = EnemyLibrary.getEnemy(enemies[i]);
+			}
+			/*
 			switch(id) {
 				case "Eidolon":
 					BossLibrary.eidolon();
@@ -32,7 +36,7 @@
 					Core.text.fightText(parsedString, true);
 				break;
 			}
-			id = "";
+			*/
 			setTurns();
 		}
 		//Pushes entity objects into turn array if there is data in them
@@ -69,14 +73,49 @@
 		public static function killTarget():void {
 			
 		}
+		
+		private static var onWin:Function;
+		private  static var onLoss:Function;
+		public static function setEnd(win:Function, loss:Function):void {
+			onWin = win;
+			onLoss = loss;
+		}
+		
+
+		private static function isTeamDefeated(team:Array):Boolean {
+			for( var i:int = 0; i < team.length; i += 1) {
+				if (team[i].active) {
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		// Check if the game is over and if so which team has won
+		public static function checkEnd():void {			
+			// Check if all the entities on either team have been defeated. Player loses on ties
+			if (isTeamDefeated(playerTeam)) {
+				endCombat(false);
+			} else if (isTeamDefeated(enemyTeam)) {
+				endCombat(true);
+			}
+		}
+		
 		//End combat... only if all enemies are killed or PC is killed
-		public static function endCombat():void {
+		public static function endCombat(playerWon:Boolean):void {
 			Core.screen.combat.resume.visible = true;
 			//Disable combat buttons
 			Core.screen.combat.attack.mouseEnabled = false;
 			Core.screen.combat.skills.mouseEnabled = false;
 			Core.screen.combat.magic.mouseEnabled = false;
 			Core.screen.combat.flee.mouseEnabled = false;
+			if (playerWon) {
+				Core.text.fightText("You won.");
+				onWin();
+			} else {
+				Core.text.fightText("You were defeated.");
+				onLoss();
+			}
 		}
 		
 	}

@@ -10,25 +10,17 @@
 	
 	public class Game extends MovieClip {
 		
+		private var buttons:Array;
 		public function Game() {
-			// constructor code
+			buttons = [btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12];
 			this.addEventListener(Event.ADDED_TO_STAGE, initialize);
 		}
 		//Initial set-up of the game screen... so shit works properly and what not
 		private function initialize(e:Event):void {
 			//Default button visibility... everything but the 12 buttons under the text display s hould be visible... oh, and the compass
-			btn1.visible = false;
-			btn2.visible = false;
-			btn3.visible = false;
-			btn4.visible = false;
-			btn5.visible = false;
-			btn6.visible = false;
-			btn7.visible = false;
-			btn8.visible = false;
-			btn9.visible = false;
-			btn10.visible = false;
-			btn11.visible = false;
-			btn12.visible = false;
+			for (var i = 0; i < buttons.length; i += 1) {
+				buttons[i].visible = false;
+			}
 			camp.visible = false;
 			east.visible = false;
 			menu.visible = true;

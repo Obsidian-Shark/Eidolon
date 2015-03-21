@@ -57,6 +57,7 @@
 			baldr: {
 				name: "Baldr",
 				gender: "Male",
+				abilities:[AbilityLibrary.getAbility("Firebolt")],
 				level: 99,
 				str: 150,
 				endr: 80,

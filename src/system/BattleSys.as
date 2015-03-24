@@ -104,11 +104,6 @@
 		//End combat... only if all enemies are killed or PC is killed
 		public static function endCombat(playerWon:Boolean):void {
 			Core.screen.combat.resume.visible = true;
-			//Disable combat buttons
-			Core.screen.combat.attack.mouseEnabled = false;
-			Core.screen.combat.skills.mouseEnabled = false;
-			Core.screen.combat.magic.mouseEnabled = false;
-			Core.screen.combat.flee.mouseEnabled = false;
 			if (playerWon) {
 				Core.text.fightText("You won.");
 				onWin();

@@ -158,7 +158,9 @@
 				interpret(event);
 			}
 		}
+<<<<<<< HEAD
 		//Check flags... I think?
+=======
 		
 		//Run combat... still needs extensive work to funciton correctly
 		private function runCombat(sceneData) {
@@ -178,6 +180,7 @@
 		}
 		
 		// Sets the value of any flags in scene data to new values also specified in the data
+>>>>>>> origin/master
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
 			if (flagData) {

@@ -21,7 +21,11 @@
 		//Initial set-up of the combat screen... so shit works properly.
 		private function initialize(e:Event):void {
 			//Default UI visibily
+			attack.visible = true;
+			flee.visible = true;
+			magic.visible = true;
 			resume.visible = false;
+			skills.visible = true;
 			player.visible = false;
 			companion1.visible = false;
 			companion2.visible = false;
@@ -32,8 +36,13 @@
 			e2Target.visible = false;
 			e3Target.visible = false;
 			//Button labels
+			attack.text.text = "Attack";
+			flee.text.text = "Flee";
+			magic.text.text = "Spells";
 			resume.text.text = "Continue";
+			skills.text.text = "Skills";
 			//Set eventlisteners to the buttons
+			attack.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.attack);
 			resume.addEventListener(MouseEvent.MOUSE_DOWN, Core.btn.toGame);
 		}
 		//Load up data when an encounter is triggered.

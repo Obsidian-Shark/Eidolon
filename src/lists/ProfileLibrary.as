@@ -16,20 +16,7 @@
 		public static function buildProfile (rawProfile: Object) {
 			var builtProfile = {};
 			
-			// Clone the data
-			for (var prop in rawProfile) {
-				builtProfile[prop] = rawProfile[prop];
-			}
-			
-			// Add in the the profile data that can be derived from other 
-			// parts of the profile.
-			builtProfile.maxHP = Math.round((builtProfile.endr * 10.5) * 1);
-			builtProfile.maxMP = Math.round((builtProfile.wis * 10.5) * 1);
-			builtProfile.maxSP = Math.round((builtProfile.endr + builtProfile.str * 2.5) * 1);
-			builtProfile.HP = builtProfile.maxHP;
-			builtProfile.MP = builtProfile.maxMP;
-			builtProfile.SP = builtProfile.maxSP;
-			return builtProfile;
+			return new Player(rawProfile);
 		}
 
 
@@ -57,7 +44,7 @@
 			baldr: {
 				name: "Baldr",
 				gender: "Male",
-				abilities:[AbilityLibrary.getAbility("Firebolt")],
+				abilities:["Firebolt"],
 				level: 99,
 				str: 150,
 				endr: 80,

@@ -38,8 +38,10 @@
 		public var bag:Object = { };
 		public var sigils:int = 0;
 		
-		public function Player() {
-			// constructor code
+		public function Player(data = undefined) {
+			trace('New player ' + this.name);
+			super(data);
+			trace(JSON.stringify(this));
 		}
 		
 		//Plug in data for combat

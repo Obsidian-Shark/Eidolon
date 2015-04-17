@@ -45,11 +45,7 @@
 				charData;
 			
 			if (charName)  {
-				charData = ProfileLibrary.getProfile(charName);
-				
-				for (var prop in charData) {
-					Core.pc[prop] = charData[prop];
-				}
+				Core.pc = ProfileLibrary.getProfile(charName);
 			}
 			Core.screen.game.refreshUI();
 		}
@@ -165,11 +161,9 @@
 			var encounterData = sceneData.fight;
 			
 			if (encounterData) {
-				trace("start combat");
-				trace(JSON.stringify(encounterData));
+				BattleSys.loadEncounter(encounterData.enemies); // This needs to happen before we swich to the combat scene
 				var combat = Core.screen.switchTo("Combat"),
 					intepreter = this;
-				BattleSys.loadEncounter(encounterData.enemies);
 				BattleSys.setEnd(function () {
 					intepreter.interpret(encounterData.win);
 				}, function () {

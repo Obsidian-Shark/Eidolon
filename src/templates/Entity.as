@@ -62,9 +62,11 @@
 			this[prop] = data[prop]
 		}
 		
+		abilities.push("Attack");
 		for (var i = 0; i < abilities.length; i += 1) {
 			abilities[i] = AbilityLibrary.getAbility(abilities[i]);
 		}
+		
 				
 		maxHP = Math.round(((endr || 1) * 10.5)*1);
 		maxMP = Math.round(((wis  || 1) * 10.5)*1);

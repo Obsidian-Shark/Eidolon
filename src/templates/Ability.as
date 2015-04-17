@@ -6,6 +6,7 @@
 		
 		// All of thes are private because abilities are intended to be immutable meaning they cannot be altered after they are created
 		private var name:String;
+		private var category:String;
 		private var targeted:Boolean;
 		private var cost:int;
 		private var callback:Function;
@@ -19,6 +20,9 @@
 			}
 			if (name === undefined) {
 				throw new IllegalOperationError("All abilities must have names");
+			}
+			if (category === undefined) {
+				throw new IllegalOperationError("Error in ability " + name + " abilities must have categories");
 			}
 			if (callback === undefined) {
 				throw new IllegalOperationError("Error in ability " + name + " abilities must have callbacks");
@@ -36,7 +40,11 @@
 		}
 		
 		public function getName():String {
-			return name
+			return name;
+		}
+		
+		public function getCategory():String {
+			return category;
 		}
 
 		// Checks if an entity can afford to use this ability.

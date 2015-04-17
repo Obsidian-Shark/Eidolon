@@ -14,7 +14,10 @@
 		// Returns an entity based of an enemy of a given name
 		// Searches for the name in both the enemies and bosses list
 		public static function getAbility(name:String):Ability {
-			var source = abilities[name];
+			
+			var source = abilities[name.toLowerCase()];
+			trace(name);
+			trace(JSON.stringify(source));
 			source.name = name;
 			return new Ability(source);
 		}
@@ -22,6 +25,7 @@
 		
 		// A common target validator
 		static function isEnemy(caster:Entity, target:Entity) {
+			trace("IE c:" + caster.team + " t:" + target.team);
 			return caster.team != target.team;
 		}
 		
@@ -40,10 +44,23 @@
 		
 		// A list of abilitiy data.
 		private static var abilities = {
-			Firebolt: {
+			attack: {
 				targeted: true,
+				category: 'basic',
+				cost: 0,
+				targetValidator: isEnemy,
+				callback: function (caster, target) {
+					caster.attack(target);
+				},
+				heuristic: function(caster, target) {
+					return caster.wis * 10 - this.cost * 2;
+				}
+			},
+			firebolt: {
+				targeted: true,
+				category: 'magic',
 				cost: 10,
-				targetValidator: any, //isEnemy,
+				targetValidator: isEnemy,
 				callback: function (caster, target) {
 					caster.dealDamage(50 + caster.wis * 20, target);
 				},

@@ -22,7 +22,7 @@
 		private var characters:Array;
 		private var targets:Array;
 		
-		private var noop:Function = function () {trace('noop')}; // Short for no operation. A placeholder function that does nothing
+		private var noop:Function = function () {}; // Short for no operation. A placeholder function that does nothing
 
 		
 		// Initilize the combat object. This happens each time a new Combat object is created.
@@ -67,26 +67,73 @@
 
 		// Opens the basic menu with attack, skills, ect
 		private function mainMenu() {
+			var caster = BattleSys.playerTeam[0], // Currently hard coded as player. Change this to use for an ally
+				categories = getCategories(caster.abilities)
 			clearButtons();
-			assignButton("Attack", noop);
-			assignButton("Abilities", abilityMenu);
+			addAbilitiesOfCategory(caster, "basic");
+			for (var i = 0; i < categories.length; i += 1) {
+				assignButton(categories[i], categoryMenuFactory(caster, categories[i]));
+			}
+		}
+		
+		// Creates callbacks which open menues for specific cateogiresi of abilities
+		private function categoryMenuFactory(caster:Entity, category:String):Function {
+			return function () {
+				clearButtons();
+				assignButton("Return", mainMenu);
+				addAbilitiesOfCategory(caster, category);
+			}
+		}
+		
+		// Creates a list of all the unique non basic categories of abilities a character has
+		private function getCategories(abilities:Array):Array {
+			var categorySet = {},
+				categoryList = [];
+			for (var i = 0; i < abilities.length; i += 1) {
+				categorySet[abilities[i].getCategory()] = true;
+			}
+			delete categorySet.basic;
+			for (var category in categorySet) {
+				categoryList.push(category);
+			}
+			return categoryList;
+		}
+		
+		private function abilitiesOfCategory(abilities:Array, category:String) {
+			return abilities.filter(function (abil) {
+				return abil.getCategory() === category;
+			});
 		}
 		
 		// Generates a callback that runs a specific ability
 		private function abilityEffectFactory(ability:Ability, caster:Entity, target:Entity = undefined) {
 			return function () {
 				var suffix = target ? " on " + target.name : "";
-				Core.text.fightText(caster.name + " uses " + ability.getName() + suffix, true);
+				Core.text.fightText(caster.name + " uses " + ability.getName() + suffix + "\n", true);
 				ability.runAbility(caster, target);
 				BattleSys.runAllTurns();
 				mainMenu();
 			}
 		}
 		
-		// Generates a callback that opens the target selection menu with a secified ability and casteer
+		// Generates a callback that opens the target selection menu with a secified ability and caster
 		private function targetMenuFactory(ability:Ability, caster:Entity) {
 			return function () {
 				targetMenu(ability, caster);
+			}
+		}
+		
+		private function addAbilitiesOfCategory(caster:Entity, category:String) {
+			var abilities = abilitiesOfCategory(caster.abilities, category);
+			trace(abilities)
+			for(var i = 0; i < abilities.length; i += 1) {
+				if (abilities[i].isAffordable(caster)) {
+					if (abilities[i].isTargeted()) {
+						assignButton(abilities[i].getName(), targetMenuFactory(abilities[i], caster));
+					} else {
+						assignButton(abilities[i].getName(), abilityEffectFactory(abilities[i], caster));
+					}
+				}
 			}
 		}
 		
@@ -94,13 +141,11 @@
 		private function abilityMenu() {
 			var caster = BattleSys.playerTeam[0],
 				abilities = caster.abilities; // get the players abilities
-			trace('abil count', abilities.length);
 			clearButtons();
 			assignButton("Return", mainMenu);
 			for(var i = 0; i < abilities.length; i += 1) {
 				if (abilities[i].isAffordable(caster)) {
 					if (abilities[i].isTargeted()) {
-						trace('tm', abilities[i].getName());
 						assignButton(abilities[i].getName(), targetMenuFactory(abilities[i], caster));
 					} else {
 						assignButton(abilities[i].getName(), abilityEffectFactory(abilities[i], caster));

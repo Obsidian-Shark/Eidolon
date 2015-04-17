@@ -27,8 +27,19 @@
 			for (var i = 0; i < enemies.length; i += 1) {
 				enemyTeam[i] = EnemyLibrary.getEnemy(enemies[i]);
 			}
+			makeTeams();
 			setTurns();
 		}
+		
+		private static function makeTeams () {
+			for (var i = 0; i < playerTeam.length; i += 1) {
+				playerTeam[i].team = 'player';
+			}
+			for (var i = 0; i < enemyTeam.length; i += 1) {
+				enemyTeam[i].team = 'enemy';
+			}
+		}
+		
 		//Pushes entity objects into turn array if there is data in them
 		private static function setTurns():void {
 			// Gets all the active members of the teams then adds them to the turnOrder array.

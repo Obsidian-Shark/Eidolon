@@ -30,6 +30,7 @@
 				pcStats(sceneData);
 				runFlags(sceneData);
 				runItems(sceneData);
+				runCombat(sceneData);
 			} else {
 				Core.text.addText("No data for scene " + sceneName);
 			}
@@ -44,11 +45,7 @@
 				charData;
 			
 			if (charName)  {
-				charData = ProfileLibrary.getProfile(charName);
-				
-				for (var prop in charData) {
-					Core.pc[prop] = charData[prop];
-				}
+				Core.pc = ProfileLibrary.getProfile(charName);
 			}
 			Core.screen.game.refreshUI();
 		}
@@ -158,18 +155,15 @@
 				interpret(event);
 			}
 		}
-<<<<<<< HEAD
-		//Check flags... I think?
-=======
-		
+
 		//Run combat... still needs extensive work to funciton correctly
 		private function runCombat(sceneData) {
 			var encounterData = sceneData.fight;
 			
 			if (encounterData) {
+				BattleSys.loadEncounter(encounterData.enemies); // This needs to happen before we swich to the combat scene
 				var combat = Core.screen.switchTo("Combat"),
 					intepreter = this;
-				BattleSys.loadEncounter(encounterData.enemies);
 				BattleSys.setEnd(function () {
 					intepreter.interpret(encounterData.win);
 				}, function () {
@@ -180,7 +174,6 @@
 		}
 		
 		// Sets the value of any flags in scene data to new values also specified in the data
->>>>>>> origin/master
 		private function runFlags(sceneData) {
 			var flagData = sceneData.flags;
 			if (flagData) {

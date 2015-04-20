@@ -23,22 +23,23 @@
 		
 		//Loads the called encounter
 		public static function loadEncounter(enemies:Array):void {
-			//flushEncounterData();
 			Core.pc.loadCombat();
 			for (var i = 0; i < enemies.length; i += 1) {
 				enemyTeam[i] = EnemyLibrary.getEnemy(enemies[i]);
 			}
-			/*
-			switch(id) {
-				case "Eidolon":
-					BossLibrary.eidolon();
-					var parsedString = StringUtil.substitute(defaultTxt, "Eidolon"); 
-					Core.text.fightText(parsedString, true);
-				break;
-			}
-			*/
+			makeTeams();
 			setTurns();
 		}
+		
+		private static function makeTeams () {
+			for (var i = 0; i < playerTeam.length; i += 1) {
+				playerTeam[i].team = 'player';
+			}
+			for (var i = 0; i < enemyTeam.length; i += 1) {
+				enemyTeam[i].team = 'enemy';
+			}
+		}
+		
 		//Pushes entity objects into turn array if there is data in them
 		private static function setTurns():void {
 			// Gets all the active members of the teams then adds them to the turnOrder array.
@@ -49,7 +50,7 @@
 		}
 		
 		// Returns an array containing all the members of a team which are active
-		public static function getActiveMembers(team) {
+		public static function getActiveMembers(team):Array  {
 			var activeMembers = [];
 			for (var i:int = 0; i < team.length; i += 1) {
 				if (team[i].active) {
@@ -57,6 +58,10 @@
 				}
 			}
 			return activeMembers;
+		}
+		
+		public static function getActiveEntities():Array {
+			return getActiveMembers(playerTeam).concat(getActiveMembers(enemyTeam));
 		}
 											   
 		//Designed by Void Director to set turn order and cycle through turns.
@@ -69,11 +74,7 @@
 			}
 			trace(turnOrder);
 		}
-		//Kill the target and remove them from turn order
-		public static function killTarget():void {
-			
-		}
-		
+	
 		private static var onWin:Function;
 		private  static var onLoss:Function;
 		public static function setEnd(win:Function, loss:Function):void {
@@ -81,7 +82,6 @@
 			onLoss = loss;
 		}
 		
-
 		private static function isTeamDefeated(team:Array):Boolean {
 			for( var i:int = 0; i < team.length; i += 1) {
 				if (team[i].active) {
@@ -103,12 +103,8 @@
 		
 		//End combat... only if all enemies are killed or PC is killed
 		public static function endCombat(playerWon:Boolean):void {
-			Core.screen.combat.resume.visible = true;
-			//Disable combat buttons
-			Core.screen.combat.attack.mouseEnabled = false;
-			Core.screen.combat.skills.mouseEnabled = false;
-			Core.screen.combat.magic.mouseEnabled = false;
-			Core.screen.combat.flee.mouseEnabled = false;
+			Core.screen.combat.endFight();
+			
 			if (playerWon) {
 				Core.text.fightText("You won.");
 				onWin();

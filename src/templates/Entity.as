@@ -2,6 +2,7 @@
 {
 	import system.*;
 	import mx.utils.*;
+	import lists.AbilityLibrary;
 
 	/**
 	 * ...
@@ -44,6 +45,12 @@
 	public var handArmr:Object = { };
 	public var legArmr:Object = { };
 	
+	public var abilities:Array = [];
+	
+	public function addAbility(newAbility:Ability) {
+		
+	}
+	
 	// Builds an entity from an object containing that entities data
 	// If given no arguments will build a blank entity instead
 	public function Entity(data:Object = undefined)
@@ -54,6 +61,12 @@
 		for (var prop in data) {
 			this[prop] = data[prop]
 		}
+		
+		abilities.push("Attack");
+		for (var i = 0; i < abilities.length; i += 1) {
+			abilities[i] = AbilityLibrary.getAbility(abilities[i]);
+		}
+		
 				
 		maxHP = Math.round(((endr || 1) * 10.5)*1);
 		maxMP = Math.round(((wis  || 1) * 10.5)*1);
@@ -143,7 +156,7 @@
 	private function takeDamage(amount:int, dealer:Entity):int {
 		var oldHP = this.HP;
 		this.HP = Math.max(this.HP - amount, 0); // You can't take more damage than you have life
-		Core.screen.combat.refreshDisplays();
+		Core.screen.combat.updateDisplay();
 		var diff = oldHP - this.HP; // store how much damage the attacker actually did
 		Core.text.fightText(StringUtil.substitute(this.dmgTxt, this.name, diff) + "\r");
 		this.checkDefeated();

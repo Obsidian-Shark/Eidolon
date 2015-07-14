@@ -35,9 +35,28 @@
 				discipline: 50,
 				honesty: 50,
 				will: 50,
-				//Arm this bitch
+				//Arm this bastard
 				weapon1: ItemLibrary.Fist,
 				weapon2: ItemLibrary.Fist
+				//Setup Body Slots
+			},
+			
+			female: {
+				gender: "Female",
+				level: 1,
+				str: 10,
+				endr: 10,
+				dex: 12,
+				agi: 12,
+				wis: 10,
+				chrs: 10,
+				//Personality
+				agression: 10,
+				discipline: 50,
+				will: 50,
+				//Arm this bitch
+				weapon1: ItemLibrary.Fist,
+				Weapon2: ItemLibrary.Fist
 				//Setup Body Slots
 			},
 
@@ -48,8 +67,8 @@
 				level: 99,
 				str: 150,
 				endr: 80,
-				dex: 40,
-				agi: 40,
+				dex: 25,
+				agi: 25,
 				wis: 37,
 				chrs: 999,
 				// Weapons
@@ -64,6 +83,23 @@
 				trust: 30,
 				vile: 10,
 				virtuous: 70
+			},
+			
+			caetus: {
+				name: "Caetus",
+				gender: "Female",
+				abilities: ["Firebolt"],
+				level: 99,
+				str: 62,
+				endr: 30,
+				dex: 75,
+				agi: 130,
+				wis: 50,
+				chrs: 999,
+				//Weapons
+				weapon1: ItemLibrary.LevthFang,
+				weapon2: ItemLibrary.Fist
+				
 			}
 		}
 	}
